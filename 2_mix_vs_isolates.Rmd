@@ -1,0 +1,157 @@
+# Mix vs isolates
+
+## Butyrivibrio fibrosolvens
+
+```{r comparison_butyrivibrio, message=F, warning=F}
+gene_counts_pair <- gene_counts %>% 
+  filter(sample %in% c("C300216","C300205")) %>%
+  mutate(sample = case_when(
+    sample == "C300216" ~ "mix",
+    sample == "C300205" ~ "isolate",
+    TRUE ~ sample  # Retain other values as-is
+  )) %>% 
+  filter(str_detect(gene, "butyrivibrio_fibrisolvens")) %>%
+  group_by(sample) %>% 
+  mutate(total=sum(count)) %>% 
+  rowwise() %>% 
+  mutate(count=count/total) %>% 
+  select(gene,sample,count) %>% 
+  pivot_wider(names_from = sample, values_from = count) %>%
+  filter(if_all(everything(), ~ . != 0)) %>%
+  left_join(gene_annotations,by="gene")
+
+# Top overexpression in mixture
+gene_counts_pair %>% 
+  mutate(difference_abs = mix-isolate) %>% 
+  mutate(difference_rel = mix/isolate) %>% 
+  select(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) %>% 
+  arrange(-difference_rel) %>% 
+  slice_head(n = 20) %>%
+  tt()
+
+# Top overexpression in isolate
+gene_counts_pair %>% 
+  mutate(difference_abs = isolate-mix) %>% 
+  mutate(difference_rel = isolate/mix) %>% 
+  select(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) %>% 
+  arrange(-difference_rel) %>% 
+  slice_head(n = 20) %>%
+  tt()
+```
+
+## Megasphaera elsdenii
+
+```{r comparison_megasphaera, message=F, warning=F}
+gene_counts_pair <- gene_counts %>% 
+  filter(sample %in% c("C300216","C300212")) %>%
+  mutate(sample = case_when(
+    sample == "C300216" ~ "mix",
+    sample == "C300212" ~ "isolate",
+    TRUE ~ sample  # Retain other values as-is
+  )) %>% 
+  filter(str_detect(gene, "megasphaera_elsdenii")) %>%
+  group_by(sample) %>% 
+  mutate(total=sum(count)) %>% 
+  rowwise() %>% 
+  mutate(count=count/total) %>% 
+  select(gene,sample,count) %>% 
+  pivot_wider(names_from = sample, values_from = count) %>%
+  filter(if_all(everything(), ~ . != 0)) %>%
+  left_join(gene_annotations,by="gene")
+
+# Top overexpression in mixture
+gene_counts_pair %>% 
+  mutate(difference_abs = mix-isolate) %>% 
+  mutate(difference_rel = mix/isolate) %>% 
+  select(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) %>% 
+  arrange(-difference_rel) %>% 
+  slice_head(n = 20) %>%
+  tt()
+
+# Top overexpression in isolate
+gene_counts_pair %>% 
+  mutate(difference_abs = isolate-mix) %>% 
+  mutate(difference_rel = isolate/mix) %>% 
+  select(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) %>% 
+  arrange(-difference_rel) %>% 
+  slice_head(n = 20) %>%
+  tt()
+```
+
+## Prevotella ruminicola
+
+```{r comparison_prevotella, message=F, warning=F}
+gene_counts_pair <- gene_counts %>% 
+  filter(sample %in% c("C300216","C300214")) %>%
+  mutate(sample = case_when(
+    sample == "C300216" ~ "mix",
+    sample == "C300214" ~ "isolate",
+    TRUE ~ sample  # Retain other values as-is
+  )) %>% 
+  filter(str_detect(gene, "prevotella_ruminicola")) %>%
+  group_by(sample) %>% 
+  mutate(total=sum(count)) %>% 
+  rowwise() %>% 
+  mutate(count=count/total) %>% 
+  select(gene,sample,count) %>% 
+  pivot_wider(names_from = sample, values_from = count) %>%
+  filter(if_all(everything(), ~ . != 0)) %>%
+  left_join(gene_annotations,by="gene")
+
+# Top overexpression in mixture
+gene_counts_pair %>% 
+  mutate(difference_abs = mix-isolate) %>% 
+  mutate(difference_rel = mix/isolate) %>% 
+  select(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) %>% 
+  arrange(-difference_rel) %>% 
+  slice_head(n = 20) %>%
+  tt()
+
+# Top overexpression in isolate
+gene_counts_pair %>% 
+  mutate(difference_abs = isolate-mix) %>% 
+  mutate(difference_rel = isolate/mix) %>% 
+  select(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) %>% 
+  arrange(-difference_rel) %>% 
+  slice_head(n = 20) %>%
+  tt()
+```
+
+## Eubacterium hallii
+
+```{r comparison_eubacterium, message=F, warning=F}
+gene_counts_pair <- gene_counts %>% 
+  filter(sample %in% c("C300216","C300203")) %>%
+  mutate(sample = case_when(
+    sample == "C300216" ~ "mix",
+    sample == "C300203" ~ "isolate",
+    TRUE ~ sample  # Retain other values as-is
+  )) %>% 
+  filter(str_detect(gene, "anaerobutyricum_hallii")) %>%
+  group_by(sample) %>% 
+  mutate(total=sum(count)) %>% 
+  rowwise() %>% 
+  mutate(count=count/total) %>% 
+  select(gene,sample,count) %>% 
+  pivot_wider(names_from = sample, values_from = count) %>%
+  filter(if_all(everything(), ~ . != 0)) %>%
+  left_join(gene_annotations,by="gene")
+
+# Top overexpression in mixture
+gene_counts_pair %>% 
+  mutate(difference_abs = mix-isolate) %>% 
+  mutate(difference_rel = mix/isolate) %>% 
+  select(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) %>% 
+  arrange(-difference_rel) %>% 
+  slice_head(n = 20) %>%
+  tt()
+
+# Top overexpression in isolate
+gene_counts_pair %>% 
+  mutate(difference_abs = isolate-mix) %>% 
+  mutate(difference_rel = isolate/mix) %>% 
+  select(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) %>% 
+  arrange(-difference_rel) %>% 
+  slice_head(n = 20) %>%
+  tt()
+```
