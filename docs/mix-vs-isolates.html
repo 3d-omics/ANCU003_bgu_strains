@@ -23,7 +23,7 @@
 <meta name="author" content="Antton Alberdi" />
 
 
-<meta name="date" content="2025-01-14" />
+<meta name="date" content="2025-01-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -2037,7 +2037,10 @@ color: #741A48;
 <li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="overview.html"><a href="overview.html#load-data"><i class="fa fa-check"></i><b>2.1</b> Load data</a></li>
-<li class="chapter" data-level="2.2" data-path="overview.html"><a href="overview.html#basic-statistics"><i class="fa fa-check"></i><b>2.2</b> Basic statistics</a></li>
+<li class="chapter" data-level="2.2" data-path="overview.html"><a href="overview.html#basic-statistics"><i class="fa fa-check"></i><b>2.2</b> Basic statistics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="overview.html"><a href="overview.html#sequencing-depth-per-sample"><i class="fa fa-check"></i><b>2.2.1</b> Sequencing depth per sample</a></li>
+</ul></li>
 <li class="chapter" data-level="2.3" data-path="overview.html"><a href="overview.html#carbohydrate-active-enzymes"><i class="fa fa-check"></i><b>2.3</b> Carbohydrate active enzymes</a>
 <ul>
 <li class="chapter" data-level="2.3.1" data-path="overview.html"><a href="overview.html#cazy-vs.-non-cazy-gene-expression"><i class="fa fa-check"></i><b>2.3.1</b> CAZY vs. non-CAZY gene expression</a></li>
@@ -2082,7 +2085,16 @@ color: #741A48;
 <li class="chapter" data-level="4.3.2" data-path="gene-selection.html"><a href="gene-selection.html#carbohydrate-binding-module-family-48"><i class="fa fa-check"></i><b>4.3.2</b> Carbohydrate-Binding Module Family 48</a></li>
 <li class="chapter" data-level="4.3.3" data-path="gene-selection.html"><a href="gene-selection.html#glycosyltransferase-family-5"><i class="fa fa-check"></i><b>4.3.3</b> GlycosylTransferase Family 5</a></li>
 <li class="chapter" data-level="4.3.4" data-path="gene-selection.html"><a href="gene-selection.html#glycosyltransferase-family-2"><i class="fa fa-check"></i><b>4.3.4</b> GlycosylTransferase Family 2</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gene-selection.html"><a href="gene-selection.html#glycoside-hydrolase-family-3-gh3"><i class="fa fa-check"></i><b>4.3.5</b> Glycoside Hydrolase Family 3 (GH3)</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gene-selection.html"><a href="gene-selection.html#glycoside-hydrolase-family-77"><i class="fa fa-check"></i><b>4.3.6</b> Glycoside Hydrolase Family 77</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="target-preparation.html"><a href="target-preparation.html"><i class="fa fa-check"></i><b>5</b> Target preparation</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="target-preparation.html"><a href="target-preparation.html#expression-based-1"><i class="fa fa-check"></i><b>5.1</b> Expression-based</a></li>
+<li class="chapter" data-level="5.2" data-path="target-preparation.html"><a href="target-preparation.html#differential-expression"><i class="fa fa-check"></i><b>5.2</b> Differential expression</a></li>
+<li class="chapter" data-level="5.3" data-path="target-preparation.html"><a href="target-preparation.html#biologically-relevant"><i class="fa fa-check"></i><b>5.3</b> Biologically relevant</a></li>
+<li class="chapter" data-level="5.4" data-path="target-preparation.html"><a href="target-preparation.html#run-shell"><i class="fa fa-check"></i><b>5.4</b> Run shell</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://www.3domics.eu" target="blank"><b>www.3domics.eu</b></a></li>
@@ -2110,40 +2122,40 @@ color: #741A48;
 <h1><span class="header-section-number">Chapter 3</span> Mix vs isolates<a href="mix-vs-isolates.html#mix-vs-isolates" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="butyrivibrio-fibrosolvens" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Butyrivibrio fibrosolvens<a href="mix-vs-isolates.html#butyrivibrio-fibrosolvens" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb12-1"><a href="mix-vs-isolates.html#cb12-1" tabindex="-1"></a>gene_counts_pair <span class="ot">&lt;-</span> gene_counts <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="mix-vs-isolates.html#cb12-2" tabindex="-1"></a>  <span class="fu">filter</span>(sample <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;C300216&quot;</span>,<span class="st">&quot;C300205&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="mix-vs-isolates.html#cb12-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">case_when</span>(</span>
-<span id="cb12-4"><a href="mix-vs-isolates.html#cb12-4" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300216&quot;</span> <span class="sc">~</span> <span class="st">&quot;mix&quot;</span>,</span>
-<span id="cb12-5"><a href="mix-vs-isolates.html#cb12-5" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300205&quot;</span> <span class="sc">~</span> <span class="st">&quot;isolate&quot;</span>,</span>
-<span id="cb12-6"><a href="mix-vs-isolates.html#cb12-6" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> sample  <span class="co"># Retain other values as-is</span></span>
-<span id="cb12-7"><a href="mix-vs-isolates.html#cb12-7" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-8"><a href="mix-vs-isolates.html#cb12-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(gene, <span class="st">&quot;butyrivibrio_fibrisolvens&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-9"><a href="mix-vs-isolates.html#cb12-9" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-10"><a href="mix-vs-isolates.html#cb12-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total=</span><span class="fu">sum</span>(count)) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-11"><a href="mix-vs-isolates.html#cb12-11" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb12-12"><a href="mix-vs-isolates.html#cb12-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count=</span>count<span class="sc">/</span>total) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-13"><a href="mix-vs-isolates.html#cb12-13" tabindex="-1"></a>  <span class="fu">select</span>(gene,sample,count) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-14"><a href="mix-vs-isolates.html#cb12-14" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sample, <span class="at">values_from =</span> count) <span class="sc">%&gt;%</span></span>
-<span id="cb12-15"><a href="mix-vs-isolates.html#cb12-15" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">everything</span>(), <span class="sc">~</span> . <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-16"><a href="mix-vs-isolates.html#cb12-16" tabindex="-1"></a>  <span class="fu">left_join</span>(gene_annotations,<span class="at">by=</span><span class="st">&quot;gene&quot;</span>)</span>
-<span id="cb12-17"><a href="mix-vs-isolates.html#cb12-17" tabindex="-1"></a></span>
-<span id="cb12-18"><a href="mix-vs-isolates.html#cb12-18" tabindex="-1"></a><span class="co"># Top overexpression in mixture</span></span>
-<span id="cb12-19"><a href="mix-vs-isolates.html#cb12-19" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
-<span id="cb12-20"><a href="mix-vs-isolates.html#cb12-20" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> mix<span class="sc">-</span>isolate) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-21"><a href="mix-vs-isolates.html#cb12-21" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> mix<span class="sc">/</span>isolate) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-22"><a href="mix-vs-isolates.html#cb12-22" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-23"><a href="mix-vs-isolates.html#cb12-23" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-24"><a href="mix-vs-isolates.html#cb12-24" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-25"><a href="mix-vs-isolates.html#cb12-25" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb13-1"><a href="mix-vs-isolates.html#cb13-1" tabindex="-1"></a>gene_counts_pair <span class="ot">&lt;-</span> gene_counts <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="mix-vs-isolates.html#cb13-2" tabindex="-1"></a>  <span class="fu">filter</span>(sample <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;C300216&quot;</span>,<span class="st">&quot;C300205&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="mix-vs-isolates.html#cb13-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">case_when</span>(</span>
+<span id="cb13-4"><a href="mix-vs-isolates.html#cb13-4" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300216&quot;</span> <span class="sc">~</span> <span class="st">&quot;mix&quot;</span>,</span>
+<span id="cb13-5"><a href="mix-vs-isolates.html#cb13-5" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300205&quot;</span> <span class="sc">~</span> <span class="st">&quot;isolate&quot;</span>,</span>
+<span id="cb13-6"><a href="mix-vs-isolates.html#cb13-6" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> sample  <span class="co"># Retain other values as-is</span></span>
+<span id="cb13-7"><a href="mix-vs-isolates.html#cb13-7" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-8"><a href="mix-vs-isolates.html#cb13-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(gene, <span class="st">&quot;butyrivibrio_fibrisolvens&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="mix-vs-isolates.html#cb13-9" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-10"><a href="mix-vs-isolates.html#cb13-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total=</span><span class="fu">sum</span>(norm)) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-11"><a href="mix-vs-isolates.html#cb13-11" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb13-12"><a href="mix-vs-isolates.html#cb13-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">norm=</span>norm<span class="sc">/</span>total) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-13"><a href="mix-vs-isolates.html#cb13-13" tabindex="-1"></a>  <span class="fu">select</span>(gene,sample,norm) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-14"><a href="mix-vs-isolates.html#cb13-14" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sample, <span class="at">values_from =</span> norm) <span class="sc">%&gt;%</span></span>
+<span id="cb13-15"><a href="mix-vs-isolates.html#cb13-15" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">everything</span>(), <span class="sc">~</span> . <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-16"><a href="mix-vs-isolates.html#cb13-16" tabindex="-1"></a>  <span class="fu">left_join</span>(gene_annotations,<span class="at">by=</span><span class="st">&quot;gene&quot;</span>)</span>
+<span id="cb13-17"><a href="mix-vs-isolates.html#cb13-17" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="mix-vs-isolates.html#cb13-18" tabindex="-1"></a><span class="co"># Top overexpression in mixture</span></span>
+<span id="cb13-19"><a href="mix-vs-isolates.html#cb13-19" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
+<span id="cb13-20"><a href="mix-vs-isolates.html#cb13-20" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> mix<span class="sc">-</span>isolate) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-21"><a href="mix-vs-isolates.html#cb13-21" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> mix<span class="sc">/</span>isolate) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-22"><a href="mix-vs-isolates.html#cb13-22" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-23"><a href="mix-vs-isolates.html#cb13-23" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-24"><a href="mix-vs-isolates.html#cb13-24" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-25"><a href="mix-vs-isolates.html#cb13-25" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
-      function styleCell_s5hogrdatw4id14cs00u(i, j, css_id) {
-        var table = document.getElementById("tinytable_s5hogrdatw4id14cs00u");
+      function styleCell_kyftrwokhlv9y7i0xf1e(i, j, css_id) {
+        var table = document.getElementById("tinytable_kyftrwokhlv9y7i0xf1e");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_s5hogrdatw4id14cs00u');
+        var table = document.getElementById('tinytable_kyftrwokhlv9y7i0xf1e');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2151,8 +2163,8 @@ color: #741A48;
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_s5hogrdatw4id14cs00u(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_s5hogrdatw4id14cs00u");
+      function spanCell_kyftrwokhlv9y7i0xf1e(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_kyftrwokhlv9y7i0xf1e");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2178,20 +2190,20 @@ color: #741A48;
         targetCell.rowSpan = rowspan;
         targetCell.colSpan = colspan;
       }
-window.addEventListener('load', function () { styleCell_s5hogrdatw4id14cs00u(0, 0, 'tinytable_css_idalzfgzgfaba6u3egtz2w') })
-window.addEventListener('load', function () { styleCell_s5hogrdatw4id14cs00u(0, 1, 'tinytable_css_idalzfgzgfaba6u3egtz2w') })
-window.addEventListener('load', function () { styleCell_s5hogrdatw4id14cs00u(0, 2, 'tinytable_css_idalzfgzgfaba6u3egtz2w') })
-window.addEventListener('load', function () { styleCell_s5hogrdatw4id14cs00u(0, 3, 'tinytable_css_idalzfgzgfaba6u3egtz2w') })
-window.addEventListener('load', function () { styleCell_s5hogrdatw4id14cs00u(0, 4, 'tinytable_css_idalzfgzgfaba6u3egtz2w') })
-window.addEventListener('load', function () { styleCell_s5hogrdatw4id14cs00u(0, 5, 'tinytable_css_idalzfgzgfaba6u3egtz2w') })
-window.addEventListener('load', function () { styleCell_s5hogrdatw4id14cs00u(0, 6, 'tinytable_css_idalzfgzgfaba6u3egtz2w') })
+window.addEventListener('load', function () { styleCell_kyftrwokhlv9y7i0xf1e(0, 0, 'tinytable_css_idw76jh4uv2e0uiepoysi5') })
+window.addEventListener('load', function () { styleCell_kyftrwokhlv9y7i0xf1e(0, 1, 'tinytable_css_idw76jh4uv2e0uiepoysi5') })
+window.addEventListener('load', function () { styleCell_kyftrwokhlv9y7i0xf1e(0, 2, 'tinytable_css_idw76jh4uv2e0uiepoysi5') })
+window.addEventListener('load', function () { styleCell_kyftrwokhlv9y7i0xf1e(0, 3, 'tinytable_css_idw76jh4uv2e0uiepoysi5') })
+window.addEventListener('load', function () { styleCell_kyftrwokhlv9y7i0xf1e(0, 4, 'tinytable_css_idw76jh4uv2e0uiepoysi5') })
+window.addEventListener('load', function () { styleCell_kyftrwokhlv9y7i0xf1e(0, 5, 'tinytable_css_idw76jh4uv2e0uiepoysi5') })
+window.addEventListener('load', function () { styleCell_kyftrwokhlv9y7i0xf1e(0, 6, 'tinytable_css_idw76jh4uv2e0uiepoysi5') })
     </script>
 
     <style>
-.table td.tinytable_css_idalzfgzgfaba6u3egtz2w, .table th.tinytable_css_idalzfgzgfaba6u3egtz2w { border-bottom: solid 0.1em #d3d8dc; }
+.table td.tinytable_css_idw76jh4uv2e0uiepoysi5, .table th.tinytable_css_idw76jh4uv2e0uiepoysi5 { border-bottom: solid 0.1em #d3d8dc; }
 </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_s5hogrdatw4id14cs00u" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_kyftrwokhlv9y7i0xf1e" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -2208,181 +2220,181 @@ window.addEventListener('load', function () { styleCell_s5hogrdatw4id14cs00u(0, 
         <tbody>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000037_67 </td>
-                  <td>0.6913029425</td>
-                  <td>3.839056e-04</td>
-                  <td>0.6909190370</td>
-                  <td>1800.71091</td>
+                  <td>0.7052938502</td>
+                  <td>4.329083e-04</td>
+                  <td>0.7048609419</td>
+                  <td>1629.19919</td>
                   <td>K02406</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000033_17 </td>
-                  <td>0.0029233581</td>
-                  <td>3.411274e-05</td>
-                  <td>0.0028892454</td>
-                  <td>  85.69696</td>
+                  <td>0.0024012828</td>
+                  <td>3.097046e-05</td>
+                  <td>0.0023703123</td>
+                  <td>  77.53461</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000037_66 </td>
-                  <td>0.0008101721</td>
-                  <td>1.296236e-05</td>
-                  <td>0.0007972098</td>
-                  <td>  62.50189</td>
+                  <td>0.0008265688</td>
+                  <td>1.461691e-05</td>
+                  <td>0.0008119519</td>
+                  <td>  56.54879</td>
                   <td>K02406</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000028_53 </td>
-                  <td>0.0003295093</td>
-                  <td>5.347273e-06</td>
-                  <td>0.0003241620</td>
-                  <td>  61.62192</td>
+                  <td>0.0006425085</td>
+                  <td>1.152427e-05</td>
+                  <td>0.0006309842</td>
+                  <td>  55.75264</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000033_79 </td>
-                  <td>0.0045986673</td>
-                  <td>8.629640e-05</td>
-                  <td>0.0045123709</td>
-                  <td>  53.28922</td>
+                  <td>0.0145925517</td>
+                  <td>3.026647e-04</td>
+                  <td>0.0142898870</td>
+                  <td>  48.21360</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000037_78 </td>
-                  <td>0.0008453465</td>
-                  <td>1.611343e-05</td>
-                  <td>0.0008292331</td>
-                  <td>  52.46222</td>
+                  <td>0.0014456725</td>
+                  <td>3.045742e-05</td>
+                  <td>0.0014152151</td>
+                  <td>  47.46537</td>
                   <td>K06603</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000056_28 </td>
-                  <td>0.0003848748</td>
-                  <td>9.859035e-06</td>
-                  <td>0.0003750158</td>
-                  <td>  39.03778</td>
+                  <td>0.0002936008</td>
+                  <td>8.312696e-06</td>
+                  <td>0.0002852881</td>
+                  <td>  35.31956</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000050_14 </td>
-                  <td>0.0008213094</td>
-                  <td>2.184266e-05</td>
-                  <td>0.0007994667</td>
-                  <td>  37.60117</td>
+                  <td>0.0004609468</td>
+                  <td>1.354938e-05</td>
+                  <td>0.0004473974</td>
+                  <td>  34.01978</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000050_13 </td>
-                  <td>0.0009616062</td>
-                  <td>2.573375e-05</td>
-                  <td>0.0009358724</td>
-                  <td>  37.36751</td>
+                  <td>0.0005671472</td>
+                  <td>1.677535e-05</td>
+                  <td>0.0005503719</td>
+                  <td>  33.80838</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000037_76 </td>
-                  <td>0.0005473660</td>
-                  <td>1.470500e-05</td>
-                  <td>0.0005326610</td>
-                  <td>  37.22312</td>
+                  <td>0.0011060703</td>
+                  <td>3.284277e-05</td>
+                  <td>0.0010732275</td>
+                  <td>  33.67774</td>
                   <td>K02422</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000053_217</td>
-                  <td>0.0013916308</td>
-                  <td>3.838578e-05</td>
-                  <td>0.0013532450</td>
-                  <td>  36.25381</td>
+                  <td>0.0005798265</td>
+                  <td>1.767723e-05</td>
+                  <td>0.0005621493</td>
+                  <td>  32.80075</td>
                   <td>K03406</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000028_35 </td>
-                  <td>0.0014897424</td>
-                  <td>4.210978e-05</td>
-                  <td>0.0014476327</td>
-                  <td>  35.37759</td>
+                  <td>0.0046739552</td>
+                  <td>1.460246e-04</td>
+                  <td>0.0045279306</td>
+                  <td>  32.00799</td>
                   <td>K02398</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000049_52 </td>
-                  <td>0.0001460657</td>
-                  <td>4.153685e-06</td>
-                  <td>0.0001419121</td>
-                  <td>  35.16534</td>
+                  <td>0.0001966128</td>
+                  <td>6.179690e-06</td>
+                  <td>0.0001904331</td>
+                  <td>  31.81596</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000037_77 </td>
-                  <td>0.0023844452</td>
-                  <td>7.077975e-05</td>
-                  <td>0.0023136655</td>
-                  <td>  33.68824</td>
+                  <td>0.0012989235</td>
+                  <td>4.261624e-05</td>
+                  <td>0.0012563073</td>
+                  <td>  30.47955</td>
                   <td>K02407</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000052_120</td>
-                  <td>0.0003595557</td>
-                  <td>1.112424e-05</td>
-                  <td>0.0003484315</td>
-                  <td>  32.32183</td>
+                  <td>0.0009648522</td>
+                  <td>3.299398e-05</td>
+                  <td>0.0009318582</td>
+                  <td>  29.24328</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000040_13 </td>
-                  <td>0.0004335901</td>
-                  <td>1.346367e-05</td>
-                  <td>0.0004201265</td>
-                  <td>  32.20445</td>
+                  <td>0.0005836368</td>
+                  <td>2.003072e-05</td>
+                  <td>0.0005636061</td>
+                  <td>  29.13709</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000067_38 </td>
-                  <td>0.0001284385</td>
-                  <td>4.010455e-06</td>
-                  <td>0.0001244280</td>
-                  <td>  32.02592</td>
+                  <td>0.0001924399</td>
+                  <td>6.641455e-06</td>
+                  <td>0.0001857984</td>
+                  <td>  28.97556</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000067_39 </td>
-                  <td>0.0008069672</td>
-                  <td>2.752413e-05</td>
-                  <td>0.0007794431</td>
-                  <td>  29.31853</td>
+                  <td>0.0002319871</td>
+                  <td>8.745637e-06</td>
+                  <td>0.0002232415</td>
+                  <td>  26.52604</td>
                   <td>K05349</td>
                   <td>GH3</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000014_9  </td>
-                  <td>0.0004356333</td>
-                  <td>1.542115e-05</td>
-                  <td>0.0004202121</td>
-                  <td>  28.24907</td>
+                  <td>0.0009204050</td>
+                  <td>3.601178e-05</td>
+                  <td>0.0008843932</td>
+                  <td>  25.55844</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000056_29 </td>
-                  <td>0.0003654047</td>
-                  <td>1.384562e-05</td>
-                  <td>0.0003515591</td>
-                  <td>  26.39136</td>
+                  <td>0.0003140581</td>
+                  <td>1.315279e-05</td>
+                  <td>0.0003009053</td>
+                  <td>  23.87767</td>
                   <td>K03406</td>
                   <td>NA </td>
                 </tr>
@@ -2390,23 +2402,23 @@ window.addEventListener('load', function () { styleCell_s5hogrdatw4id14cs00u(0, 
       </table>
     </div>
 <!-- hack to avoid NA insertion in last line -->
-<div class="sourceCode" id="cb13"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb13-1"><a href="mix-vs-isolates.html#cb13-1" tabindex="-1"></a><span class="co"># Top overexpression in isolate</span></span>
-<span id="cb13-2"><a href="mix-vs-isolates.html#cb13-2" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="mix-vs-isolates.html#cb13-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> isolate<span class="sc">-</span>mix) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-4"><a href="mix-vs-isolates.html#cb13-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> isolate<span class="sc">/</span>mix) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-5"><a href="mix-vs-isolates.html#cb13-5" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-6"><a href="mix-vs-isolates.html#cb13-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-7"><a href="mix-vs-isolates.html#cb13-7" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-8"><a href="mix-vs-isolates.html#cb13-8" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb14-1"><a href="mix-vs-isolates.html#cb14-1" tabindex="-1"></a><span class="co"># Top overexpression in isolate</span></span>
+<span id="cb14-2"><a href="mix-vs-isolates.html#cb14-2" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="mix-vs-isolates.html#cb14-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> isolate<span class="sc">-</span>mix) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="mix-vs-isolates.html#cb14-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> isolate<span class="sc">/</span>mix) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-5"><a href="mix-vs-isolates.html#cb14-5" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-6"><a href="mix-vs-isolates.html#cb14-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-7"><a href="mix-vs-isolates.html#cb14-7" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-8"><a href="mix-vs-isolates.html#cb14-8" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
-      function styleCell_584y5g4h3xcj0y2aalxy(i, j, css_id) {
-        var table = document.getElementById("tinytable_584y5g4h3xcj0y2aalxy");
+      function styleCell_2053nfnifgxy3kconw3t(i, j, css_id) {
+        var table = document.getElementById("tinytable_2053nfnifgxy3kconw3t");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_584y5g4h3xcj0y2aalxy');
+        var table = document.getElementById('tinytable_2053nfnifgxy3kconw3t');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2414,8 +2426,8 @@ window.addEventListener('load', function () { styleCell_s5hogrdatw4id14cs00u(0, 
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_584y5g4h3xcj0y2aalxy(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_584y5g4h3xcj0y2aalxy");
+      function spanCell_2053nfnifgxy3kconw3t(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_2053nfnifgxy3kconw3t");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2441,20 +2453,20 @@ window.addEventListener('load', function () { styleCell_s5hogrdatw4id14cs00u(0, 
         targetCell.rowSpan = rowspan;
         targetCell.colSpan = colspan;
       }
-window.addEventListener('load', function () { styleCell_584y5g4h3xcj0y2aalxy(0, 0, 'tinytable_css_idnido66o10xqn1s2k4fbc') })
-window.addEventListener('load', function () { styleCell_584y5g4h3xcj0y2aalxy(0, 1, 'tinytable_css_idnido66o10xqn1s2k4fbc') })
-window.addEventListener('load', function () { styleCell_584y5g4h3xcj0y2aalxy(0, 2, 'tinytable_css_idnido66o10xqn1s2k4fbc') })
-window.addEventListener('load', function () { styleCell_584y5g4h3xcj0y2aalxy(0, 3, 'tinytable_css_idnido66o10xqn1s2k4fbc') })
-window.addEventListener('load', function () { styleCell_584y5g4h3xcj0y2aalxy(0, 4, 'tinytable_css_idnido66o10xqn1s2k4fbc') })
-window.addEventListener('load', function () { styleCell_584y5g4h3xcj0y2aalxy(0, 5, 'tinytable_css_idnido66o10xqn1s2k4fbc') })
-window.addEventListener('load', function () { styleCell_584y5g4h3xcj0y2aalxy(0, 6, 'tinytable_css_idnido66o10xqn1s2k4fbc') })
+window.addEventListener('load', function () { styleCell_2053nfnifgxy3kconw3t(0, 0, 'tinytable_css_id0cts7614xy2le6i7rjha') })
+window.addEventListener('load', function () { styleCell_2053nfnifgxy3kconw3t(0, 1, 'tinytable_css_id0cts7614xy2le6i7rjha') })
+window.addEventListener('load', function () { styleCell_2053nfnifgxy3kconw3t(0, 2, 'tinytable_css_id0cts7614xy2le6i7rjha') })
+window.addEventListener('load', function () { styleCell_2053nfnifgxy3kconw3t(0, 3, 'tinytable_css_id0cts7614xy2le6i7rjha') })
+window.addEventListener('load', function () { styleCell_2053nfnifgxy3kconw3t(0, 4, 'tinytable_css_id0cts7614xy2le6i7rjha') })
+window.addEventListener('load', function () { styleCell_2053nfnifgxy3kconw3t(0, 5, 'tinytable_css_id0cts7614xy2le6i7rjha') })
+window.addEventListener('load', function () { styleCell_2053nfnifgxy3kconw3t(0, 6, 'tinytable_css_id0cts7614xy2le6i7rjha') })
     </script>
 
     <style>
-.table td.tinytable_css_idnido66o10xqn1s2k4fbc, .table th.tinytable_css_idnido66o10xqn1s2k4fbc { border-bottom: solid 0.1em #d3d8dc; }
+.table td.tinytable_css_id0cts7614xy2le6i7rjha, .table th.tinytable_css_id0cts7614xy2le6i7rjha { border-bottom: solid 0.1em #d3d8dc; }
 </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_584y5g4h3xcj0y2aalxy" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_2053nfnifgxy3kconw3t" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -2471,181 +2483,181 @@ window.addEventListener('load', function () { styleCell_584y5g4h3xcj0y2aalxy(0, 
         <tbody>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000043_72 </td>
-                  <td>6.810526e-07</td>
-                  <td>0.0021884432</td>
-                  <td>0.0021877621</td>
-                  <td>3213.3248</td>
+                  <td>1.519722e-06</td>
+                  <td>0.0053974481</td>
+                  <td>0.0053959283</td>
+                  <td>3551.6032</td>
                   <td>K07979</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000043_73 </td>
-                  <td>3.084768e-06</td>
-                  <td>0.0058609456</td>
-                  <td>0.0058578608</td>
-                  <td>1899.9634</td>
+                  <td>3.046637e-06</td>
+                  <td>0.0063978755</td>
+                  <td>0.0063948289</td>
+                  <td>2099.9795</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000051_32 </td>
-                  <td>1.201857e-07</td>
-                  <td>0.0001661952</td>
-                  <td>0.0001660750</td>
-                  <td>1382.8192</td>
+                  <td>4.799121e-07</td>
+                  <td>0.0007334945</td>
+                  <td>0.0007330146</td>
+                  <td>1528.3936</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000054_79 </td>
-                  <td>5.889102e-06</td>
-                  <td>0.0077554558</td>
-                  <td>0.0077495667</td>
-                  <td>1316.9166</td>
+                  <td>5.816307e-06</td>
+                  <td>0.0084659446</td>
+                  <td>0.0084601283</td>
+                  <td>1455.5532</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000043_74 </td>
-                  <td>4.887554e-06</td>
-                  <td>0.0048897948</td>
-                  <td>0.0048849073</td>
-                  <td>1000.4585</td>
+                  <td>6.275281e-06</td>
+                  <td>0.0069390831</td>
+                  <td>0.0069328078</td>
+                  <td>1105.7804</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000040_107</td>
-                  <td>3.605572e-07</td>
-                  <td>0.0003094973</td>
-                  <td>0.0003091367</td>
-                  <td> 858.3860</td>
+                  <td>4.367270e-07</td>
+                  <td>0.0004143453</td>
+                  <td>0.0004139086</td>
+                  <td> 948.7514</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000018_17 </td>
-                  <td>4.839480e-05</td>
-                  <td>0.0353979457</td>
-                  <td>0.0353495509</td>
-                  <td> 731.4412</td>
+                  <td>5.328248e-05</td>
+                  <td>0.0430758303</td>
+                  <td>0.0430225478</td>
+                  <td> 808.4426</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000018_14 </td>
-                  <td>1.129746e-05</td>
-                  <td>0.0074244262</td>
-                  <td>0.0074131287</td>
-                  <td> 657.1766</td>
+                  <td>7.314471e-06</td>
+                  <td>0.0053129384</td>
+                  <td>0.0053056239</td>
+                  <td> 726.3599</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000051_33 </td>
-                  <td>1.922972e-06</td>
-                  <td>0.0011379427</td>
-                  <td>0.0011360197</td>
-                  <td> 591.7625</td>
+                  <td>6.631512e-06</td>
+                  <td>0.0043374036</td>
+                  <td>0.0043307720</td>
+                  <td> 654.0595</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000073_9  </td>
-                  <td>6.690340e-06</td>
-                  <td>0.0034557230</td>
-                  <td>0.0034490327</td>
-                  <td> 516.5243</td>
+                  <td>2.012782e-06</td>
+                  <td>0.0011490985</td>
+                  <td>0.0011470858</td>
+                  <td> 570.9007</td>
                   <td>K17686</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000018_16 </td>
-                  <td>3.108805e-05</td>
-                  <td>0.0150585658</td>
-                  <td>0.0150274777</td>
-                  <td> 484.3844</td>
+                  <td>4.760493e-05</td>
+                  <td>0.0254866005</td>
+                  <td>0.0254389956</td>
+                  <td> 535.3773</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000033_103</td>
-                  <td>1.934991e-05</td>
-                  <td>0.0092756808</td>
-                  <td>0.0092563309</td>
-                  <td> 479.3657</td>
+                  <td>1.570872e-05</td>
+                  <td>0.0083229538</td>
+                  <td>0.0083072451</td>
+                  <td> 529.8303</td>
                   <td>K03705</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000018_13 </td>
-                  <td>6.009287e-07</td>
-                  <td>0.0002874398</td>
-                  <td>0.0002868389</td>
-                  <td> 478.3259</td>
+                  <td>1.906875e-06</td>
+                  <td>0.0010081287</td>
+                  <td>0.0010062218</td>
+                  <td> 528.6810</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000051_36 </td>
-                  <td>8.693436e-06</td>
-                  <td>0.0041030534</td>
-                  <td>0.0040943600</td>
-                  <td> 471.9714</td>
+                  <td>8.741146e-06</td>
+                  <td>0.0045598849</td>
+                  <td>0.0045511438</td>
+                  <td> 521.6576</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000049_85 </td>
-                  <td>6.009287e-07</td>
-                  <td>0.0002760052</td>
-                  <td>0.0002754043</td>
-                  <td> 459.2978</td>
+                  <td>6.860576e-07</td>
+                  <td>0.0003482770</td>
+                  <td>0.0003475909</td>
+                  <td> 507.6497</td>
                   <td>K02003</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000045_350</td>
-                  <td>5.688792e-06</td>
-                  <td>0.0023434663</td>
-                  <td>0.0023377775</td>
-                  <td> 411.9444</td>
+                  <td>2.612884e-06</td>
+                  <td>0.0011896757</td>
+                  <td>0.0011870628</td>
+                  <td> 455.3113</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000045_352</td>
-                  <td>1.017573e-05</td>
-                  <td>0.0039143233</td>
-                  <td>0.0039041476</td>
-                  <td> 384.6726</td>
+                  <td>7.047472e-06</td>
+                  <td>0.0029963632</td>
+                  <td>0.0029893157</td>
+                  <td> 425.1685</td>
                   <td>K13038</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000052_59 </td>
-                  <td>7.611764e-07</td>
-                  <td>0.0002823551</td>
-                  <td>0.0002815939</td>
-                  <td> 370.9457</td>
+                  <td>1.351582e-06</td>
+                  <td>0.0005541440</td>
+                  <td>0.0005527924</td>
+                  <td> 409.9965</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000018_12 </td>
-                  <td>2.119275e-05</td>
-                  <td>0.0078419193</td>
-                  <td>0.0078207266</td>
-                  <td> 370.0283</td>
+                  <td>1.038551e-05</td>
+                  <td>0.0042474916</td>
+                  <td>0.0042371061</td>
+                  <td> 408.9826</td>
                   <td>K03205</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_butyrivibrio_fibrisolvens@contig_00000051_34 </td>
-                  <td>6.409907e-06</td>
-                  <td>0.0023288091</td>
-                  <td>0.0023223992</td>
-                  <td> 363.3140</td>
+                  <td>8.886080e-06</td>
+                  <td>0.0035683069</td>
+                  <td>0.0035594208</td>
+                  <td> 401.5614</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
@@ -2656,40 +2668,40 @@ window.addEventListener('load', function () { styleCell_584y5g4h3xcj0y2aalxy(0, 
 </div>
 <div id="megasphaera-elsdenii" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Megasphaera elsdenii<a href="mix-vs-isolates.html#megasphaera-elsdenii" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb14-1"><a href="mix-vs-isolates.html#cb14-1" tabindex="-1"></a>gene_counts_pair <span class="ot">&lt;-</span> gene_counts <span class="sc">%&gt;%</span> </span>
-<span id="cb14-2"><a href="mix-vs-isolates.html#cb14-2" tabindex="-1"></a>  <span class="fu">filter</span>(sample <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;C300216&quot;</span>,<span class="st">&quot;C300212&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="mix-vs-isolates.html#cb14-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">case_when</span>(</span>
-<span id="cb14-4"><a href="mix-vs-isolates.html#cb14-4" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300216&quot;</span> <span class="sc">~</span> <span class="st">&quot;mix&quot;</span>,</span>
-<span id="cb14-5"><a href="mix-vs-isolates.html#cb14-5" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300212&quot;</span> <span class="sc">~</span> <span class="st">&quot;isolate&quot;</span>,</span>
-<span id="cb14-6"><a href="mix-vs-isolates.html#cb14-6" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> sample  <span class="co"># Retain other values as-is</span></span>
-<span id="cb14-7"><a href="mix-vs-isolates.html#cb14-7" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-8"><a href="mix-vs-isolates.html#cb14-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(gene, <span class="st">&quot;megasphaera_elsdenii&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-9"><a href="mix-vs-isolates.html#cb14-9" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-10"><a href="mix-vs-isolates.html#cb14-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total=</span><span class="fu">sum</span>(count)) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-11"><a href="mix-vs-isolates.html#cb14-11" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb14-12"><a href="mix-vs-isolates.html#cb14-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count=</span>count<span class="sc">/</span>total) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-13"><a href="mix-vs-isolates.html#cb14-13" tabindex="-1"></a>  <span class="fu">select</span>(gene,sample,count) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-14"><a href="mix-vs-isolates.html#cb14-14" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sample, <span class="at">values_from =</span> count) <span class="sc">%&gt;%</span></span>
-<span id="cb14-15"><a href="mix-vs-isolates.html#cb14-15" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">everything</span>(), <span class="sc">~</span> . <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-16"><a href="mix-vs-isolates.html#cb14-16" tabindex="-1"></a>  <span class="fu">left_join</span>(gene_annotations,<span class="at">by=</span><span class="st">&quot;gene&quot;</span>)</span>
-<span id="cb14-17"><a href="mix-vs-isolates.html#cb14-17" tabindex="-1"></a></span>
-<span id="cb14-18"><a href="mix-vs-isolates.html#cb14-18" tabindex="-1"></a><span class="co"># Top overexpression in mixture</span></span>
-<span id="cb14-19"><a href="mix-vs-isolates.html#cb14-19" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
-<span id="cb14-20"><a href="mix-vs-isolates.html#cb14-20" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> mix<span class="sc">-</span>isolate) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-21"><a href="mix-vs-isolates.html#cb14-21" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> mix<span class="sc">/</span>isolate) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-22"><a href="mix-vs-isolates.html#cb14-22" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-23"><a href="mix-vs-isolates.html#cb14-23" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-24"><a href="mix-vs-isolates.html#cb14-24" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb14-25"><a href="mix-vs-isolates.html#cb14-25" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb15-1"><a href="mix-vs-isolates.html#cb15-1" tabindex="-1"></a>gene_counts_pair <span class="ot">&lt;-</span> gene_counts <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="mix-vs-isolates.html#cb15-2" tabindex="-1"></a>  <span class="fu">filter</span>(sample <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;C300216&quot;</span>,<span class="st">&quot;C300212&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="mix-vs-isolates.html#cb15-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">case_when</span>(</span>
+<span id="cb15-4"><a href="mix-vs-isolates.html#cb15-4" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300216&quot;</span> <span class="sc">~</span> <span class="st">&quot;mix&quot;</span>,</span>
+<span id="cb15-5"><a href="mix-vs-isolates.html#cb15-5" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300212&quot;</span> <span class="sc">~</span> <span class="st">&quot;isolate&quot;</span>,</span>
+<span id="cb15-6"><a href="mix-vs-isolates.html#cb15-6" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> sample  <span class="co"># Retain other values as-is</span></span>
+<span id="cb15-7"><a href="mix-vs-isolates.html#cb15-7" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-8"><a href="mix-vs-isolates.html#cb15-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(gene, <span class="st">&quot;megasphaera_elsdenii&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-9"><a href="mix-vs-isolates.html#cb15-9" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-10"><a href="mix-vs-isolates.html#cb15-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total=</span><span class="fu">sum</span>(norm)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-11"><a href="mix-vs-isolates.html#cb15-11" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb15-12"><a href="mix-vs-isolates.html#cb15-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">norm=</span>norm<span class="sc">/</span>total) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-13"><a href="mix-vs-isolates.html#cb15-13" tabindex="-1"></a>  <span class="fu">select</span>(gene,sample,norm) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-14"><a href="mix-vs-isolates.html#cb15-14" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sample, <span class="at">values_from =</span> norm) <span class="sc">%&gt;%</span></span>
+<span id="cb15-15"><a href="mix-vs-isolates.html#cb15-15" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">everything</span>(), <span class="sc">~</span> . <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-16"><a href="mix-vs-isolates.html#cb15-16" tabindex="-1"></a>  <span class="fu">left_join</span>(gene_annotations,<span class="at">by=</span><span class="st">&quot;gene&quot;</span>)</span>
+<span id="cb15-17"><a href="mix-vs-isolates.html#cb15-17" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="mix-vs-isolates.html#cb15-18" tabindex="-1"></a><span class="co"># Top overexpression in mixture</span></span>
+<span id="cb15-19"><a href="mix-vs-isolates.html#cb15-19" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
+<span id="cb15-20"><a href="mix-vs-isolates.html#cb15-20" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> mix<span class="sc">-</span>isolate) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-21"><a href="mix-vs-isolates.html#cb15-21" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> mix<span class="sc">/</span>isolate) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-22"><a href="mix-vs-isolates.html#cb15-22" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-23"><a href="mix-vs-isolates.html#cb15-23" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-24"><a href="mix-vs-isolates.html#cb15-24" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-25"><a href="mix-vs-isolates.html#cb15-25" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
-      function styleCell_y1x5xq1y4mlnjwz0r5x1(i, j, css_id) {
-        var table = document.getElementById("tinytable_y1x5xq1y4mlnjwz0r5x1");
+      function styleCell_sxvzmsw9d15f60dbf3x2(i, j, css_id) {
+        var table = document.getElementById("tinytable_sxvzmsw9d15f60dbf3x2");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_y1x5xq1y4mlnjwz0r5x1');
+        var table = document.getElementById('tinytable_sxvzmsw9d15f60dbf3x2');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2697,8 +2709,8 @@ window.addEventListener('load', function () { styleCell_584y5g4h3xcj0y2aalxy(0, 
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_y1x5xq1y4mlnjwz0r5x1(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_y1x5xq1y4mlnjwz0r5x1");
+      function spanCell_sxvzmsw9d15f60dbf3x2(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_sxvzmsw9d15f60dbf3x2");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2724,20 +2736,20 @@ window.addEventListener('load', function () { styleCell_584y5g4h3xcj0y2aalxy(0, 
         targetCell.rowSpan = rowspan;
         targetCell.colSpan = colspan;
       }
-window.addEventListener('load', function () { styleCell_y1x5xq1y4mlnjwz0r5x1(0, 0, 'tinytable_css_id7sw4fq9ju55lprxl8wzn') })
-window.addEventListener('load', function () { styleCell_y1x5xq1y4mlnjwz0r5x1(0, 1, 'tinytable_css_id7sw4fq9ju55lprxl8wzn') })
-window.addEventListener('load', function () { styleCell_y1x5xq1y4mlnjwz0r5x1(0, 2, 'tinytable_css_id7sw4fq9ju55lprxl8wzn') })
-window.addEventListener('load', function () { styleCell_y1x5xq1y4mlnjwz0r5x1(0, 3, 'tinytable_css_id7sw4fq9ju55lprxl8wzn') })
-window.addEventListener('load', function () { styleCell_y1x5xq1y4mlnjwz0r5x1(0, 4, 'tinytable_css_id7sw4fq9ju55lprxl8wzn') })
-window.addEventListener('load', function () { styleCell_y1x5xq1y4mlnjwz0r5x1(0, 5, 'tinytable_css_id7sw4fq9ju55lprxl8wzn') })
-window.addEventListener('load', function () { styleCell_y1x5xq1y4mlnjwz0r5x1(0, 6, 'tinytable_css_id7sw4fq9ju55lprxl8wzn') })
+window.addEventListener('load', function () { styleCell_sxvzmsw9d15f60dbf3x2(0, 0, 'tinytable_css_idc2lcjbgqvviyk31y842o') })
+window.addEventListener('load', function () { styleCell_sxvzmsw9d15f60dbf3x2(0, 1, 'tinytable_css_idc2lcjbgqvviyk31y842o') })
+window.addEventListener('load', function () { styleCell_sxvzmsw9d15f60dbf3x2(0, 2, 'tinytable_css_idc2lcjbgqvviyk31y842o') })
+window.addEventListener('load', function () { styleCell_sxvzmsw9d15f60dbf3x2(0, 3, 'tinytable_css_idc2lcjbgqvviyk31y842o') })
+window.addEventListener('load', function () { styleCell_sxvzmsw9d15f60dbf3x2(0, 4, 'tinytable_css_idc2lcjbgqvviyk31y842o') })
+window.addEventListener('load', function () { styleCell_sxvzmsw9d15f60dbf3x2(0, 5, 'tinytable_css_idc2lcjbgqvviyk31y842o') })
+window.addEventListener('load', function () { styleCell_sxvzmsw9d15f60dbf3x2(0, 6, 'tinytable_css_idc2lcjbgqvviyk31y842o') })
     </script>
 
     <style>
-.table td.tinytable_css_id7sw4fq9ju55lprxl8wzn, .table th.tinytable_css_id7sw4fq9ju55lprxl8wzn { border-bottom: solid 0.1em #d3d8dc; }
+.table td.tinytable_css_idc2lcjbgqvviyk31y842o, .table th.tinytable_css_idc2lcjbgqvviyk31y842o { border-bottom: solid 0.1em #d3d8dc; }
 </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_y1x5xq1y4mlnjwz0r5x1" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_sxvzmsw9d15f60dbf3x2" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -2754,181 +2766,181 @@ window.addEventListener('load', function () { styleCell_y1x5xq1y4mlnjwz0r5x1(0, 
         <tbody>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_360 </td>
-                  <td>1.321895e-03</td>
-                  <td>5.013303e-06</td>
-                  <td>1.316882e-03</td>
-                  <td>263.67743</td>
+                  <td>8.893070e-04</td>
+                  <td>3.060005e-06</td>
+                  <td>8.862470e-04</td>
+                  <td>290.62278</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_600 </td>
-                  <td>5.124383e-04</td>
-                  <td>2.848089e-06</td>
-                  <td>5.095902e-04</td>
-                  <td>179.92354</td>
+                  <td>4.909868e-04</td>
+                  <td>2.475855e-06</td>
+                  <td>4.885110e-04</td>
+                  <td>198.31002</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_359 </td>
-                  <td>1.621488e-03</td>
-                  <td>1.172547e-05</td>
-                  <td>1.609762e-03</td>
-                  <td>138.28769</td>
+                  <td>1.053214e-03</td>
+                  <td>6.909973e-06</td>
+                  <td>1.046304e-03</td>
+                  <td>152.41938</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_249 </td>
-                  <td>3.673935e-02</td>
-                  <td>9.981470e-04</td>
-                  <td>3.574120e-02</td>
-                  <td> 36.80755</td>
+                  <td>9.545405e-02</td>
+                  <td>2.352885e-03</td>
+                  <td>9.310116e-02</td>
+                  <td> 40.56894</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_355 </td>
-                  <td>6.357784e-05</td>
-                  <td>1.865415e-06</td>
-                  <td>6.171242e-05</td>
-                  <td> 34.08241</td>
+                  <td>5.207937e-05</td>
+                  <td>1.386369e-06</td>
+                  <td>5.069300e-05</td>
+                  <td> 37.56531</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1884</td>
-                  <td>1.996289e-03</td>
-                  <td>5.969329e-05</td>
-                  <td>1.936596e-03</td>
-                  <td> 33.44244</td>
+                  <td>1.281915e-03</td>
+                  <td>3.477799e-05</td>
+                  <td>1.247137e-03</td>
+                  <td> 36.85994</td>
                   <td>K06155</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1885</td>
-                  <td>1.701477e-03</td>
-                  <td>5.133223e-05</td>
-                  <td>1.650145e-03</td>
-                  <td> 33.14637</td>
+                  <td>1.020638e-03</td>
+                  <td>2.793697e-05</td>
+                  <td>9.927015e-04</td>
+                  <td> 36.53362</td>
                   <td>K00033</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1886</td>
-                  <td>1.633072e-03</td>
-                  <td>5.154875e-05</td>
-                  <td>1.581524e-03</td>
-                  <td> 31.68015</td>
+                  <td>8.872374e-04</td>
+                  <td>2.540948e-05</td>
+                  <td>8.618279e-04</td>
+                  <td> 34.91757</td>
                   <td>K25031</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_258 </td>
-                  <td>6.271772e-03</td>
-                  <td>2.065448e-04</td>
-                  <td>6.065227e-03</td>
-                  <td> 30.36520</td>
+                  <td>4.219345e-03</td>
+                  <td>1.260702e-04</td>
+                  <td>4.093275e-03</td>
+                  <td> 33.46823</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_260 </td>
-                  <td>3.330385e-02</td>
-                  <td>1.223779e-03</td>
-                  <td>3.208007e-02</td>
-                  <td> 27.21394</td>
+                  <td>8.031939e-03</td>
+                  <td>2.677764e-04</td>
+                  <td>7.764162e-03</td>
+                  <td> 29.99495</td>
                   <td>K03737</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_353 </td>
-                  <td>7.663359e-05</td>
-                  <td>2.864745e-06</td>
-                  <td>7.376885e-05</td>
-                  <td> 26.75058</td>
+                  <td>5.082868e-05</td>
+                  <td>1.723927e-06</td>
+                  <td>4.910475e-05</td>
+                  <td> 29.48424</td>
                   <td>K03092</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_259 </td>
-                  <td>4.885334e-04</td>
-                  <td>1.845429e-05</td>
-                  <td>4.700791e-04</td>
-                  <td> 26.47263</td>
+                  <td>4.454091e-04</td>
+                  <td>1.526530e-05</td>
+                  <td>4.301438e-04</td>
+                  <td> 29.17788</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_354 </td>
-                  <td>9.134430e-05</td>
-                  <td>3.614242e-06</td>
-                  <td>8.773006e-05</td>
-                  <td> 25.27343</td>
+                  <td>5.288319e-05</td>
+                  <td>1.898439e-06</td>
+                  <td>5.098475e-05</td>
+                  <td> 27.85614</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_341 </td>
-                  <td>2.544033e-04</td>
-                  <td>1.037637e-05</td>
-                  <td>2.440269e-04</td>
-                  <td> 24.51756</td>
+                  <td>1.985974e-04</td>
+                  <td>7.349192e-06</td>
+                  <td>1.912482e-04</td>
+                  <td> 27.02302</td>
                   <td>K00005</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_356 </td>
-                  <td>8.757468e-05</td>
-                  <td>3.814108e-06</td>
-                  <td>8.376057e-05</td>
-                  <td> 22.96072</td>
+                  <td>9.237268e-05</td>
+                  <td>3.650070e-06</td>
+                  <td>8.872261e-05</td>
+                  <td> 25.30709</td>
                   <td>K00046</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_362 </td>
-                  <td>3.469888e-04</td>
-                  <td>1.527309e-05</td>
-                  <td>3.317157e-04</td>
-                  <td> 22.71897</td>
+                  <td>7.986347e-04</td>
+                  <td>3.189355e-05</td>
+                  <td>7.667411e-04</td>
+                  <td> 25.04063</td>
                   <td>K09022</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_358 </td>
-                  <td>1.218230e-05</td>
-                  <td>6.162532e-07</td>
-                  <td>1.156605e-05</td>
-                  <td> 19.76834</td>
+                  <td>6.178649e-05</td>
+                  <td>2.835741e-06</td>
+                  <td>5.895074e-05</td>
+                  <td> 21.78848</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_599 </td>
-                  <td>1.777237e-04</td>
-                  <td>9.077244e-06</td>
-                  <td>1.686465e-04</td>
-                  <td> 19.57904</td>
+                  <td>3.810911e-04</td>
+                  <td>1.765959e-05</td>
+                  <td>3.634315e-04</td>
+                  <td> 21.57984</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_342 </td>
-                  <td>1.143895e-03</td>
-                  <td>6.227489e-05</td>
-                  <td>1.081621e-03</td>
-                  <td> 18.36849</td>
+                  <td>1.577969e-03</td>
+                  <td>7.794144e-05</td>
+                  <td>1.500028e-03</td>
+                  <td> 20.24557</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_608 </td>
-                  <td>2.426807e-04</td>
-                  <td>1.412386e-05</td>
-                  <td>2.285568e-04</td>
-                  <td> 17.18232</td>
+                  <td>1.537391e-04</td>
+                  <td>8.117939e-06</td>
+                  <td>1.456212e-04</td>
+                  <td> 18.93820</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
@@ -2936,23 +2948,23 @@ window.addEventListener('load', function () { styleCell_y1x5xq1y4mlnjwz0r5x1(0, 
       </table>
     </div>
 <!-- hack to avoid NA insertion in last line -->
-<div class="sourceCode" id="cb15"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb15-1"><a href="mix-vs-isolates.html#cb15-1" tabindex="-1"></a><span class="co"># Top overexpression in isolate</span></span>
-<span id="cb15-2"><a href="mix-vs-isolates.html#cb15-2" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="mix-vs-isolates.html#cb15-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> isolate<span class="sc">-</span>mix) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="mix-vs-isolates.html#cb15-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> isolate<span class="sc">/</span>mix) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-5"><a href="mix-vs-isolates.html#cb15-5" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-6"><a href="mix-vs-isolates.html#cb15-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-7"><a href="mix-vs-isolates.html#cb15-7" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-8"><a href="mix-vs-isolates.html#cb15-8" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb16-1"><a href="mix-vs-isolates.html#cb16-1" tabindex="-1"></a><span class="co"># Top overexpression in isolate</span></span>
+<span id="cb16-2"><a href="mix-vs-isolates.html#cb16-2" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="mix-vs-isolates.html#cb16-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> isolate<span class="sc">-</span>mix) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="mix-vs-isolates.html#cb16-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> isolate<span class="sc">/</span>mix) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href="mix-vs-isolates.html#cb16-5" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="mix-vs-isolates.html#cb16-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-7"><a href="mix-vs-isolates.html#cb16-7" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-8"><a href="mix-vs-isolates.html#cb16-8" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
-      function styleCell_mtga1eupawike558pai8(i, j, css_id) {
-        var table = document.getElementById("tinytable_mtga1eupawike558pai8");
+      function styleCell_muz70n84zjnq6ub8u85m(i, j, css_id) {
+        var table = document.getElementById("tinytable_muz70n84zjnq6ub8u85m");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_mtga1eupawike558pai8');
+        var table = document.getElementById('tinytable_muz70n84zjnq6ub8u85m');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2960,8 +2972,8 @@ window.addEventListener('load', function () { styleCell_y1x5xq1y4mlnjwz0r5x1(0, 
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_mtga1eupawike558pai8(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_mtga1eupawike558pai8");
+      function spanCell_muz70n84zjnq6ub8u85m(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_muz70n84zjnq6ub8u85m");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2987,20 +2999,20 @@ window.addEventListener('load', function () { styleCell_y1x5xq1y4mlnjwz0r5x1(0, 
         targetCell.rowSpan = rowspan;
         targetCell.colSpan = colspan;
       }
-window.addEventListener('load', function () { styleCell_mtga1eupawike558pai8(0, 0, 'tinytable_css_id7d38k8qfcn26oy7anysr') })
-window.addEventListener('load', function () { styleCell_mtga1eupawike558pai8(0, 1, 'tinytable_css_id7d38k8qfcn26oy7anysr') })
-window.addEventListener('load', function () { styleCell_mtga1eupawike558pai8(0, 2, 'tinytable_css_id7d38k8qfcn26oy7anysr') })
-window.addEventListener('load', function () { styleCell_mtga1eupawike558pai8(0, 3, 'tinytable_css_id7d38k8qfcn26oy7anysr') })
-window.addEventListener('load', function () { styleCell_mtga1eupawike558pai8(0, 4, 'tinytable_css_id7d38k8qfcn26oy7anysr') })
-window.addEventListener('load', function () { styleCell_mtga1eupawike558pai8(0, 5, 'tinytable_css_id7d38k8qfcn26oy7anysr') })
-window.addEventListener('load', function () { styleCell_mtga1eupawike558pai8(0, 6, 'tinytable_css_id7d38k8qfcn26oy7anysr') })
+window.addEventListener('load', function () { styleCell_muz70n84zjnq6ub8u85m(0, 0, 'tinytable_css_idzestba7ucoox7os125ai') })
+window.addEventListener('load', function () { styleCell_muz70n84zjnq6ub8u85m(0, 1, 'tinytable_css_idzestba7ucoox7os125ai') })
+window.addEventListener('load', function () { styleCell_muz70n84zjnq6ub8u85m(0, 2, 'tinytable_css_idzestba7ucoox7os125ai') })
+window.addEventListener('load', function () { styleCell_muz70n84zjnq6ub8u85m(0, 3, 'tinytable_css_idzestba7ucoox7os125ai') })
+window.addEventListener('load', function () { styleCell_muz70n84zjnq6ub8u85m(0, 4, 'tinytable_css_idzestba7ucoox7os125ai') })
+window.addEventListener('load', function () { styleCell_muz70n84zjnq6ub8u85m(0, 5, 'tinytable_css_idzestba7ucoox7os125ai') })
+window.addEventListener('load', function () { styleCell_muz70n84zjnq6ub8u85m(0, 6, 'tinytable_css_idzestba7ucoox7os125ai') })
     </script>
 
     <style>
-.table td.tinytable_css_id7d38k8qfcn26oy7anysr, .table th.tinytable_css_id7d38k8qfcn26oy7anysr { border-bottom: solid 0.1em #d3d8dc; }
+.table td.tinytable_css_idzestba7ucoox7os125ai, .table th.tinytable_css_idzestba7ucoox7os125ai { border-bottom: solid 0.1em #d3d8dc; }
 </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_mtga1eupawike558pai8" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_muz70n84zjnq6ub8u85m" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -3017,181 +3029,181 @@ window.addEventListener('load', function () { styleCell_mtga1eupawike558pai8(0, 
         <tbody>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_299 </td>
-                  <td>2.473238e-05</td>
-                  <td>7.798152e-03</td>
-                  <td>7.773419e-03</td>
-                  <td>315.30135</td>
+                  <td>1.652065e-05</td>
+                  <td>0.0047260276</td>
+                  <td>4.709507e-03</td>
+                  <td>286.06791</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_337 </td>
-                  <td>7.488669e-05</td>
-                  <td>6.874105e-03</td>
-                  <td>6.799218e-03</td>
-                  <td> 91.79341</td>
+                  <td>1.723603e-04</td>
+                  <td>0.0143546354</td>
+                  <td>1.418228e-02</td>
+                  <td> 83.28270</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1955</td>
-                  <td>1.838838e-07</td>
-                  <td>1.480673e-05</td>
-                  <td>1.462285e-05</td>
-                  <td> 80.52221</td>
+                  <td>9.857505e-07</td>
+                  <td>0.0000720155</td>
+                  <td>7.102975e-05</td>
+                  <td> 73.05652</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_2190</td>
-                  <td>1.245813e-05</td>
-                  <td>9.234305e-04</td>
-                  <td>9.109724e-04</td>
-                  <td> 74.12272</td>
+                  <td>1.177675e-05</td>
+                  <td>0.0007919906</td>
+                  <td>7.802138e-04</td>
+                  <td> 67.25037</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1482</td>
-                  <td>1.011361e-04</td>
-                  <td>6.986047e-03</td>
-                  <td>6.884910e-03</td>
-                  <td> 69.07569</td>
+                  <td>4.092772e-05</td>
+                  <td>0.0025649923</td>
+                  <td>2.524065e-03</td>
+                  <td> 62.67127</td>
                   <td>K12950</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1973</td>
-                  <td>5.470544e-06</td>
-                  <td>3.122072e-04</td>
-                  <td>3.067367e-04</td>
-                  <td> 57.07059</td>
+                  <td>1.138457e-05</td>
+                  <td>0.0005894844</td>
+                  <td>5.780999e-04</td>
+                  <td> 51.77924</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1970</td>
-                  <td>5.378602e-06</td>
-                  <td>2.990161e-04</td>
-                  <td>2.936375e-04</td>
-                  <td> 55.59364</td>
+                  <td>1.119323e-05</td>
+                  <td>0.0005645780</td>
+                  <td>5.533847e-04</td>
+                  <td> 50.43922</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_2189</td>
-                  <td>2.059499e-05</td>
-                  <td>1.083190e-03</td>
-                  <td>1.062595e-03</td>
-                  <td> 52.59483</td>
+                  <td>2.079123e-05</td>
+                  <td>0.0009921252</td>
+                  <td>9.713340e-04</td>
+                  <td> 47.71845</td>
                   <td>K00606</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_16  </td>
-                  <td>5.934851e-05</td>
-                  <td>3.120140e-03</td>
-                  <td>3.060792e-03</td>
-                  <td> 52.57318</td>
+                  <td>3.629448e-05</td>
+                  <td>0.0017312036</td>
+                  <td>1.694909e-03</td>
+                  <td> 47.69881</td>
                   <td>K03310</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1971</td>
-                  <td>2.252577e-06</td>
-                  <td>1.174545e-04</td>
-                  <td>1.152020e-04</td>
-                  <td> 52.14229</td>
+                  <td>7.787429e-06</td>
+                  <td>0.0003684067</td>
+                  <td>3.606193e-04</td>
+                  <td> 47.30788</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1485</td>
-                  <td>1.267879e-04</td>
-                  <td>6.452704e-03</td>
-                  <td>6.325916e-03</td>
-                  <td> 50.89369</td>
+                  <td>4.410211e-05</td>
+                  <td>0.0020364166</td>
+                  <td>1.992314e-03</td>
+                  <td> 46.17504</td>
                   <td>K04759</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1963</td>
-                  <td>9.470018e-06</td>
-                  <td>4.340421e-04</td>
-                  <td>4.245721e-04</td>
-                  <td> 45.83330</td>
+                  <td>2.530300e-05</td>
+                  <td>0.0010521956</td>
+                  <td>1.026893e-03</td>
+                  <td> 41.58382</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1486</td>
-                  <td>1.052735e-05</td>
-                  <td>4.615570e-04</td>
-                  <td>4.510297e-04</td>
-                  <td> 43.84361</td>
+                  <td>4.819787e-05</td>
+                  <td>0.0019172443</td>
+                  <td>1.869046e-03</td>
+                  <td> 39.77861</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1966</td>
-                  <td>6.895644e-06</td>
-                  <td>2.870241e-04</td>
-                  <td>2.801285e-04</td>
-                  <td> 41.62397</td>
+                  <td>2.835229e-05</td>
+                  <td>0.0010707177</td>
+                  <td>1.042365e-03</td>
+                  <td> 37.76477</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1962</td>
-                  <td>4.780980e-06</td>
-                  <td>1.979339e-04</td>
-                  <td>1.931529e-04</td>
-                  <td> 41.40027</td>
+                  <td>7.512918e-06</td>
+                  <td>0.0002821988</td>
+                  <td>2.746859e-04</td>
+                  <td> 37.56181</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1964</td>
-                  <td>2.160635e-05</td>
-                  <td>7.946669e-04</td>
-                  <td>7.730605e-04</td>
-                  <td> 36.77932</td>
+                  <td>3.682185e-05</td>
+                  <td>0.0012287189</td>
+                  <td>1.191897e-03</td>
+                  <td> 33.36929</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1965</td>
-                  <td>8.918366e-06</td>
-                  <td>3.213844e-04</td>
-                  <td>3.124660e-04</td>
-                  <td> 36.03624</td>
+                  <td>2.808106e-05</td>
+                  <td>0.0009181134</td>
+                  <td>8.900323e-04</td>
+                  <td> 32.69511</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1967</td>
-                  <td>3.355880e-06</td>
-                  <td>1.169049e-04</td>
-                  <td>1.135490e-04</td>
-                  <td> 34.83584</td>
+                  <td>1.056659e-05</td>
+                  <td>0.0003339676</td>
+                  <td>3.234010e-04</td>
+                  <td> 31.60601</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1959</td>
-                  <td>2.951336e-05</td>
-                  <td>1.017701e-03</td>
-                  <td>9.881872e-04</td>
-                  <td> 34.48271</td>
+                  <td>1.532658e-05</td>
+                  <td>0.0004795014</td>
+                  <td>4.641748e-04</td>
+                  <td> 31.28562</td>
                   <td>K21636</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_megasphaera_elsdenii@contig_00000001_1484</td>
-                  <td>6.573847e-06</td>
-                  <td>2.191863e-04</td>
-                  <td>2.126124e-04</td>
-                  <td> 33.34216</td>
+                  <td>2.359327e-05</td>
+                  <td>0.0007137156</td>
+                  <td>6.901223e-04</td>
+                  <td> 30.25081</td>
                   <td>K04758</td>
                   <td>NA</td>
                 </tr>
@@ -3202,40 +3214,40 @@ window.addEventListener('load', function () { styleCell_mtga1eupawike558pai8(0, 
 </div>
 <div id="prevotella-ruminicola" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Prevotella ruminicola<a href="mix-vs-isolates.html#prevotella-ruminicola" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb16-1"><a href="mix-vs-isolates.html#cb16-1" tabindex="-1"></a>gene_counts_pair <span class="ot">&lt;-</span> gene_counts <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="mix-vs-isolates.html#cb16-2" tabindex="-1"></a>  <span class="fu">filter</span>(sample <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;C300216&quot;</span>,<span class="st">&quot;C300214&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="mix-vs-isolates.html#cb16-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">case_when</span>(</span>
-<span id="cb16-4"><a href="mix-vs-isolates.html#cb16-4" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300216&quot;</span> <span class="sc">~</span> <span class="st">&quot;mix&quot;</span>,</span>
-<span id="cb16-5"><a href="mix-vs-isolates.html#cb16-5" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300214&quot;</span> <span class="sc">~</span> <span class="st">&quot;isolate&quot;</span>,</span>
-<span id="cb16-6"><a href="mix-vs-isolates.html#cb16-6" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> sample  <span class="co"># Retain other values as-is</span></span>
-<span id="cb16-7"><a href="mix-vs-isolates.html#cb16-7" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-8"><a href="mix-vs-isolates.html#cb16-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(gene, <span class="st">&quot;prevotella_ruminicola&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb16-9"><a href="mix-vs-isolates.html#cb16-9" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-10"><a href="mix-vs-isolates.html#cb16-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total=</span><span class="fu">sum</span>(count)) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-11"><a href="mix-vs-isolates.html#cb16-11" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb16-12"><a href="mix-vs-isolates.html#cb16-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count=</span>count<span class="sc">/</span>total) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-13"><a href="mix-vs-isolates.html#cb16-13" tabindex="-1"></a>  <span class="fu">select</span>(gene,sample,count) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-14"><a href="mix-vs-isolates.html#cb16-14" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sample, <span class="at">values_from =</span> count) <span class="sc">%&gt;%</span></span>
-<span id="cb16-15"><a href="mix-vs-isolates.html#cb16-15" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">everything</span>(), <span class="sc">~</span> . <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb16-16"><a href="mix-vs-isolates.html#cb16-16" tabindex="-1"></a>  <span class="fu">left_join</span>(gene_annotations,<span class="at">by=</span><span class="st">&quot;gene&quot;</span>)</span>
-<span id="cb16-17"><a href="mix-vs-isolates.html#cb16-17" tabindex="-1"></a></span>
-<span id="cb16-18"><a href="mix-vs-isolates.html#cb16-18" tabindex="-1"></a><span class="co"># Top overexpression in mixture</span></span>
-<span id="cb16-19"><a href="mix-vs-isolates.html#cb16-19" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
-<span id="cb16-20"><a href="mix-vs-isolates.html#cb16-20" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> mix<span class="sc">-</span>isolate) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-21"><a href="mix-vs-isolates.html#cb16-21" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> mix<span class="sc">/</span>isolate) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-22"><a href="mix-vs-isolates.html#cb16-22" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-23"><a href="mix-vs-isolates.html#cb16-23" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-24"><a href="mix-vs-isolates.html#cb16-24" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-25"><a href="mix-vs-isolates.html#cb16-25" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb17-1"><a href="mix-vs-isolates.html#cb17-1" tabindex="-1"></a>gene_counts_pair <span class="ot">&lt;-</span> gene_counts <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="mix-vs-isolates.html#cb17-2" tabindex="-1"></a>  <span class="fu">filter</span>(sample <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;C300216&quot;</span>,<span class="st">&quot;C300214&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="mix-vs-isolates.html#cb17-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">case_when</span>(</span>
+<span id="cb17-4"><a href="mix-vs-isolates.html#cb17-4" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300216&quot;</span> <span class="sc">~</span> <span class="st">&quot;mix&quot;</span>,</span>
+<span id="cb17-5"><a href="mix-vs-isolates.html#cb17-5" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300214&quot;</span> <span class="sc">~</span> <span class="st">&quot;isolate&quot;</span>,</span>
+<span id="cb17-6"><a href="mix-vs-isolates.html#cb17-6" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> sample  <span class="co"># Retain other values as-is</span></span>
+<span id="cb17-7"><a href="mix-vs-isolates.html#cb17-7" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-8"><a href="mix-vs-isolates.html#cb17-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(gene, <span class="st">&quot;prevotella_ruminicola&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-9"><a href="mix-vs-isolates.html#cb17-9" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-10"><a href="mix-vs-isolates.html#cb17-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total=</span><span class="fu">sum</span>(norm)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-11"><a href="mix-vs-isolates.html#cb17-11" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb17-12"><a href="mix-vs-isolates.html#cb17-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">norm=</span>norm<span class="sc">/</span>total) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-13"><a href="mix-vs-isolates.html#cb17-13" tabindex="-1"></a>  <span class="fu">select</span>(gene,sample,norm) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-14"><a href="mix-vs-isolates.html#cb17-14" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sample, <span class="at">values_from =</span> norm) <span class="sc">%&gt;%</span></span>
+<span id="cb17-15"><a href="mix-vs-isolates.html#cb17-15" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">everything</span>(), <span class="sc">~</span> . <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-16"><a href="mix-vs-isolates.html#cb17-16" tabindex="-1"></a>  <span class="fu">left_join</span>(gene_annotations,<span class="at">by=</span><span class="st">&quot;gene&quot;</span>)</span>
+<span id="cb17-17"><a href="mix-vs-isolates.html#cb17-17" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="mix-vs-isolates.html#cb17-18" tabindex="-1"></a><span class="co"># Top overexpression in mixture</span></span>
+<span id="cb17-19"><a href="mix-vs-isolates.html#cb17-19" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
+<span id="cb17-20"><a href="mix-vs-isolates.html#cb17-20" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> mix<span class="sc">-</span>isolate) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-21"><a href="mix-vs-isolates.html#cb17-21" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> mix<span class="sc">/</span>isolate) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-22"><a href="mix-vs-isolates.html#cb17-22" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-23"><a href="mix-vs-isolates.html#cb17-23" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-24"><a href="mix-vs-isolates.html#cb17-24" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-25"><a href="mix-vs-isolates.html#cb17-25" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
-      function styleCell_u6rakdcblgt2u3149uj8(i, j, css_id) {
-        var table = document.getElementById("tinytable_u6rakdcblgt2u3149uj8");
+      function styleCell_fuvew3cyarzclx514puy(i, j, css_id) {
+        var table = document.getElementById("tinytable_fuvew3cyarzclx514puy");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_u6rakdcblgt2u3149uj8');
+        var table = document.getElementById('tinytable_fuvew3cyarzclx514puy');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -3243,8 +3255,8 @@ window.addEventListener('load', function () { styleCell_mtga1eupawike558pai8(0, 
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_u6rakdcblgt2u3149uj8(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_u6rakdcblgt2u3149uj8");
+      function spanCell_fuvew3cyarzclx514puy(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_fuvew3cyarzclx514puy");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -3270,20 +3282,20 @@ window.addEventListener('load', function () { styleCell_mtga1eupawike558pai8(0, 
         targetCell.rowSpan = rowspan;
         targetCell.colSpan = colspan;
       }
-window.addEventListener('load', function () { styleCell_u6rakdcblgt2u3149uj8(0, 0, 'tinytable_css_idij68jkadr3nb23d45si0') })
-window.addEventListener('load', function () { styleCell_u6rakdcblgt2u3149uj8(0, 1, 'tinytable_css_idij68jkadr3nb23d45si0') })
-window.addEventListener('load', function () { styleCell_u6rakdcblgt2u3149uj8(0, 2, 'tinytable_css_idij68jkadr3nb23d45si0') })
-window.addEventListener('load', function () { styleCell_u6rakdcblgt2u3149uj8(0, 3, 'tinytable_css_idij68jkadr3nb23d45si0') })
-window.addEventListener('load', function () { styleCell_u6rakdcblgt2u3149uj8(0, 4, 'tinytable_css_idij68jkadr3nb23d45si0') })
-window.addEventListener('load', function () { styleCell_u6rakdcblgt2u3149uj8(0, 5, 'tinytable_css_idij68jkadr3nb23d45si0') })
-window.addEventListener('load', function () { styleCell_u6rakdcblgt2u3149uj8(0, 6, 'tinytable_css_idij68jkadr3nb23d45si0') })
+window.addEventListener('load', function () { styleCell_fuvew3cyarzclx514puy(0, 0, 'tinytable_css_idwgm52k8wocynlzx4wodm') })
+window.addEventListener('load', function () { styleCell_fuvew3cyarzclx514puy(0, 1, 'tinytable_css_idwgm52k8wocynlzx4wodm') })
+window.addEventListener('load', function () { styleCell_fuvew3cyarzclx514puy(0, 2, 'tinytable_css_idwgm52k8wocynlzx4wodm') })
+window.addEventListener('load', function () { styleCell_fuvew3cyarzclx514puy(0, 3, 'tinytable_css_idwgm52k8wocynlzx4wodm') })
+window.addEventListener('load', function () { styleCell_fuvew3cyarzclx514puy(0, 4, 'tinytable_css_idwgm52k8wocynlzx4wodm') })
+window.addEventListener('load', function () { styleCell_fuvew3cyarzclx514puy(0, 5, 'tinytable_css_idwgm52k8wocynlzx4wodm') })
+window.addEventListener('load', function () { styleCell_fuvew3cyarzclx514puy(0, 6, 'tinytable_css_idwgm52k8wocynlzx4wodm') })
     </script>
 
     <style>
-.table td.tinytable_css_idij68jkadr3nb23d45si0, .table th.tinytable_css_idij68jkadr3nb23d45si0 { border-bottom: solid 0.1em #d3d8dc; }
+.table td.tinytable_css_idwgm52k8wocynlzx4wodm, .table th.tinytable_css_idwgm52k8wocynlzx4wodm { border-bottom: solid 0.1em #d3d8dc; }
 </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_u6rakdcblgt2u3149uj8" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_fuvew3cyarzclx514puy" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -3300,181 +3312,181 @@ window.addEventListener('load', function () { styleCell_u6rakdcblgt2u3149uj8(0, 
         <tbody>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000007_53  </td>
-                  <td>2.339726e-03</td>
-                  <td>1.948025e-05</td>
-                  <td>2.320246e-03</td>
-                  <td>120.10761</td>
+                  <td>4.160456e-03</td>
+                  <td>3.185536e-05</td>
+                  <td>4.128600e-03</td>
+                  <td>130.60459</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000004_430 </td>
-                  <td>9.622312e-03</td>
-                  <td>1.002675e-04</td>
-                  <td>9.522044e-03</td>
-                  <td> 95.96641</td>
+                  <td>1.006387e-02</td>
+                  <td>9.644014e-05</td>
+                  <td>9.967429e-03</td>
+                  <td>104.35353</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000007_28  </td>
-                  <td>2.046566e-03</td>
-                  <td>3.223252e-05</td>
-                  <td>2.014334e-03</td>
-                  <td> 63.49383</td>
+                  <td>5.817006e-03</td>
+                  <td>8.425197e-05</td>
+                  <td>5.732754e-03</td>
+                  <td> 69.04297</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000004_218 </td>
-                  <td>6.605025e-04</td>
-                  <td>1.043523e-05</td>
-                  <td>6.500673e-04</td>
-                  <td> 63.29542</td>
+                  <td>1.280322e-03</td>
+                  <td>1.860197e-05</td>
+                  <td>1.261720e-03</td>
+                  <td> 68.82721</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000004_513 </td>
-                  <td>7.862558e-04</td>
-                  <td>1.337014e-05</td>
-                  <td>7.728857e-04</td>
-                  <td> 58.80684</td>
+                  <td>4.249413e-04</td>
+                  <td>6.645279e-06</td>
+                  <td>4.182960e-04</td>
+                  <td> 63.94634</td>
                   <td>K21572</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_1427</td>
-                  <td>2.376222e-03</td>
-                  <td>4.996212e-05</td>
-                  <td>2.326260e-03</td>
-                  <td> 47.56048</td>
+                  <td>4.810042e-03</td>
+                  <td>9.300680e-05</td>
+                  <td>4.717035e-03</td>
+                  <td> 51.71710</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000006_113 </td>
-                  <td>5.728322e-04</td>
-                  <td>1.227170e-05</td>
-                  <td>5.605605e-04</td>
-                  <td> 46.67913</td>
+                  <td>4.537731e-04</td>
+                  <td>8.939805e-06</td>
+                  <td>4.448333e-04</td>
+                  <td> 50.75872</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_458 </td>
-                  <td>1.580049e-03</td>
-                  <td>4.009327e-05</td>
-                  <td>1.539956e-03</td>
-                  <td> 39.40933</td>
+                  <td>1.194715e-03</td>
+                  <td>2.787900e-05</td>
+                  <td>1.166836e-03</td>
+                  <td> 42.85357</td>
                   <td>K00343</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000006_115 </td>
-                  <td>7.545200e-04</td>
-                  <td>1.970337e-05</td>
-                  <td>7.348166e-04</td>
-                  <td> 38.29396</td>
+                  <td>8.294711e-04</td>
+                  <td>1.991971e-05</td>
+                  <td>8.095514e-04</td>
+                  <td> 41.64071</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000004_278 </td>
-                  <td>8.453639e-04</td>
-                  <td>2.227785e-05</td>
-                  <td>8.230860e-04</td>
-                  <td> 37.94638</td>
+                  <td>5.305952e-04</td>
+                  <td>1.285894e-05</td>
+                  <td>5.177363e-04</td>
+                  <td> 41.26276</td>
                   <td>K21572</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000004_279 </td>
-                  <td>2.066401e-03</td>
-                  <td>5.466484e-05</td>
-                  <td>2.011736e-03</td>
-                  <td> 37.80128</td>
+                  <td>7.051714e-04</td>
+                  <td>1.715538e-05</td>
+                  <td>6.880160e-04</td>
+                  <td> 41.10498</td>
                   <td>K21573</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000006_114 </td>
-                  <td>1.601867e-03</td>
-                  <td>4.307967e-05</td>
-                  <td>1.558788e-03</td>
-                  <td> 37.18384</td>
+                  <td>5.651025e-04</td>
+                  <td>1.397607e-05</td>
+                  <td>5.511264e-04</td>
+                  <td> 40.43357</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000004_514 </td>
-                  <td>7.501563e-04</td>
-                  <td>2.236367e-05</td>
-                  <td>7.277926e-04</td>
-                  <td> 33.54353</td>
+                  <td>2.508457e-04</td>
+                  <td>6.877173e-06</td>
+                  <td>2.439685e-04</td>
+                  <td> 36.47511</td>
                   <td>K21573</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_457 </td>
-                  <td>1.528081e-03</td>
-                  <td>4.589443e-05</td>
-                  <td>1.482187e-03</td>
-                  <td> 33.29557</td>
+                  <td>1.132016e-03</td>
+                  <td>3.126642e-05</td>
+                  <td>1.100749e-03</td>
+                  <td> 36.20549</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_848 </td>
-                  <td>5.260615e-03</td>
-                  <td>1.732112e-04</td>
-                  <td>5.087404e-03</td>
-                  <td> 30.37111</td>
+                  <td>6.879163e-03</td>
+                  <td>2.082989e-04</td>
+                  <td>6.670864e-03</td>
+                  <td> 33.02544</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000007_29  </td>
-                  <td>8.489342e-05</td>
-                  <td>2.866257e-06</td>
-                  <td>8.202716e-05</td>
-                  <td> 29.61822</td>
+                  <td>8.955745e-04</td>
+                  <td>2.780705e-05</td>
+                  <td>8.677675e-04</td>
+                  <td> 32.20674</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_455 </td>
-                  <td>1.154392e-04</td>
-                  <td>4.102008e-06</td>
-                  <td>1.113372e-04</td>
-                  <td> 28.14211</td>
+                  <td>4.112099e-04</td>
+                  <td>1.343751e-05</td>
+                  <td>3.977724e-04</td>
+                  <td> 30.60163</td>
                   <td>K00340</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_456 </td>
-                  <td>1.700248e-03</td>
-                  <td>6.182190e-05</td>
-                  <td>1.638427e-03</td>
-                  <td> 27.50237</td>
+                  <td>9.383332e-04</td>
+                  <td>3.137611e-05</td>
+                  <td>9.069571e-04</td>
+                  <td> 29.90598</td>
                   <td>K00341</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000004_508 </td>
-                  <td>6.577256e-04</td>
-                  <td>2.471503e-05</td>
-                  <td>6.330106e-04</td>
-                  <td> 26.61238</td>
+                  <td>3.702491e-04</td>
+                  <td>1.279447e-05</td>
+                  <td>3.574546e-04</td>
+                  <td> 28.93820</td>
                   <td>K21572</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000009_11  </td>
-                  <td>2.261180e-05</td>
-                  <td>9.096503e-07</td>
-                  <td>2.170215e-05</td>
-                  <td> 24.85768</td>
+                  <td>7.680573e-05</td>
+                  <td>2.841483e-06</td>
+                  <td>7.396425e-05</td>
+                  <td> 27.03015</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
@@ -3482,23 +3494,23 @@ window.addEventListener('load', function () { styleCell_u6rakdcblgt2u3149uj8(0, 
       </table>
     </div>
 <!-- hack to avoid NA insertion in last line -->
-<div class="sourceCode" id="cb17"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb17-1"><a href="mix-vs-isolates.html#cb17-1" tabindex="-1"></a><span class="co"># Top overexpression in isolate</span></span>
-<span id="cb17-2"><a href="mix-vs-isolates.html#cb17-2" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
-<span id="cb17-3"><a href="mix-vs-isolates.html#cb17-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> isolate<span class="sc">-</span>mix) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-4"><a href="mix-vs-isolates.html#cb17-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> isolate<span class="sc">/</span>mix) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-5"><a href="mix-vs-isolates.html#cb17-5" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-6"><a href="mix-vs-isolates.html#cb17-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-7"><a href="mix-vs-isolates.html#cb17-7" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-8"><a href="mix-vs-isolates.html#cb17-8" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb18-1"><a href="mix-vs-isolates.html#cb18-1" tabindex="-1"></a><span class="co"># Top overexpression in isolate</span></span>
+<span id="cb18-2"><a href="mix-vs-isolates.html#cb18-2" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="mix-vs-isolates.html#cb18-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> isolate<span class="sc">-</span>mix) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="mix-vs-isolates.html#cb18-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> isolate<span class="sc">/</span>mix) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="mix-vs-isolates.html#cb18-5" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-6"><a href="mix-vs-isolates.html#cb18-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-7"><a href="mix-vs-isolates.html#cb18-7" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-8"><a href="mix-vs-isolates.html#cb18-8" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
-      function styleCell_ty47ajkbup6bhsuw3amk(i, j, css_id) {
-        var table = document.getElementById("tinytable_ty47ajkbup6bhsuw3amk");
+      function styleCell_l0k6t1oito16y6sv3ka0(i, j, css_id) {
+        var table = document.getElementById("tinytable_l0k6t1oito16y6sv3ka0");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_ty47ajkbup6bhsuw3amk');
+        var table = document.getElementById('tinytable_l0k6t1oito16y6sv3ka0');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -3506,8 +3518,8 @@ window.addEventListener('load', function () { styleCell_u6rakdcblgt2u3149uj8(0, 
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_ty47ajkbup6bhsuw3amk(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_ty47ajkbup6bhsuw3amk");
+      function spanCell_l0k6t1oito16y6sv3ka0(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_l0k6t1oito16y6sv3ka0");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -3533,20 +3545,20 @@ window.addEventListener('load', function () { styleCell_u6rakdcblgt2u3149uj8(0, 
         targetCell.rowSpan = rowspan;
         targetCell.colSpan = colspan;
       }
-window.addEventListener('load', function () { styleCell_ty47ajkbup6bhsuw3amk(0, 0, 'tinytable_css_idwifgk9lkfyi3ltl4n5r8') })
-window.addEventListener('load', function () { styleCell_ty47ajkbup6bhsuw3amk(0, 1, 'tinytable_css_idwifgk9lkfyi3ltl4n5r8') })
-window.addEventListener('load', function () { styleCell_ty47ajkbup6bhsuw3amk(0, 2, 'tinytable_css_idwifgk9lkfyi3ltl4n5r8') })
-window.addEventListener('load', function () { styleCell_ty47ajkbup6bhsuw3amk(0, 3, 'tinytable_css_idwifgk9lkfyi3ltl4n5r8') })
-window.addEventListener('load', function () { styleCell_ty47ajkbup6bhsuw3amk(0, 4, 'tinytable_css_idwifgk9lkfyi3ltl4n5r8') })
-window.addEventListener('load', function () { styleCell_ty47ajkbup6bhsuw3amk(0, 5, 'tinytable_css_idwifgk9lkfyi3ltl4n5r8') })
-window.addEventListener('load', function () { styleCell_ty47ajkbup6bhsuw3amk(0, 6, 'tinytable_css_idwifgk9lkfyi3ltl4n5r8') })
+window.addEventListener('load', function () { styleCell_l0k6t1oito16y6sv3ka0(0, 0, 'tinytable_css_idimcwx4r3uyk5ayh8ewdo') })
+window.addEventListener('load', function () { styleCell_l0k6t1oito16y6sv3ka0(0, 1, 'tinytable_css_idimcwx4r3uyk5ayh8ewdo') })
+window.addEventListener('load', function () { styleCell_l0k6t1oito16y6sv3ka0(0, 2, 'tinytable_css_idimcwx4r3uyk5ayh8ewdo') })
+window.addEventListener('load', function () { styleCell_l0k6t1oito16y6sv3ka0(0, 3, 'tinytable_css_idimcwx4r3uyk5ayh8ewdo') })
+window.addEventListener('load', function () { styleCell_l0k6t1oito16y6sv3ka0(0, 4, 'tinytable_css_idimcwx4r3uyk5ayh8ewdo') })
+window.addEventListener('load', function () { styleCell_l0k6t1oito16y6sv3ka0(0, 5, 'tinytable_css_idimcwx4r3uyk5ayh8ewdo') })
+window.addEventListener('load', function () { styleCell_l0k6t1oito16y6sv3ka0(0, 6, 'tinytable_css_idimcwx4r3uyk5ayh8ewdo') })
     </script>
 
     <style>
-.table td.tinytable_css_idwifgk9lkfyi3ltl4n5r8, .table th.tinytable_css_idwifgk9lkfyi3ltl4n5r8 { border-bottom: solid 0.1em #d3d8dc; }
+.table td.tinytable_css_idimcwx4r3uyk5ayh8ewdo, .table th.tinytable_css_idimcwx4r3uyk5ayh8ewdo { border-bottom: solid 0.1em #d3d8dc; }
 </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_ty47ajkbup6bhsuw3amk" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_l0k6t1oito16y6sv3ka0" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -3563,181 +3575,181 @@ window.addEventListener('load', function () { styleCell_ty47ajkbup6bhsuw3amk(0, 
         <tbody>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_950 </td>
-                  <td>8.727360e-06</td>
-                  <td>3.270691e-03</td>
-                  <td>3.261963e-03</td>
-                  <td>374.76288</td>
+                  <td>2.910369e-05</td>
+                  <td>0.0100303649</td>
+                  <td>0.0100012612</td>
+                  <td>344.64236</td>
                   <td>NA    </td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_949 </td>
-                  <td>3.173586e-05</td>
-                  <td>8.547933e-03</td>
-                  <td>8.516197e-03</td>
-                  <td>269.34621</td>
+                  <td>2.664009e-05</td>
+                  <td>0.0065987042</td>
+                  <td>0.0065720641</td>
+                  <td>247.69827</td>
                   <td>NA    </td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000007_107 </td>
-                  <td>7.933964e-07</td>
-                  <td>4.682125e-05</td>
-                  <td>4.602785e-05</td>
-                  <td> 59.01369</td>
+                  <td>3.347942e-06</td>
+                  <td>0.0001816949</td>
+                  <td>0.0001783470</td>
+                  <td> 54.27063</td>
                   <td>NA    </td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_951 </td>
-                  <td>3.173586e-05</td>
-                  <td>1.486008e-03</td>
-                  <td>1.454272e-03</td>
-                  <td> 46.82427</td>
+                  <td>3.886004e-05</td>
+                  <td>0.0016733483</td>
+                  <td>0.0016344883</td>
+                  <td> 43.06090</td>
                   <td>K11921</td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000007_22  </td>
-                  <td>2.062831e-05</td>
-                  <td>7.751766e-04</td>
-                  <td>7.545482e-04</td>
-                  <td> 37.57829</td>
+                  <td>2.484313e-05</td>
+                  <td>0.0008585299</td>
+                  <td>0.0008336867</td>
+                  <td> 34.55804</td>
                   <td>NA    </td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_948 </td>
-                  <td>8.965379e-05</td>
-                  <td>2.919600e-03</td>
-                  <td>2.829946e-03</td>
-                  <td> 32.56527</td>
+                  <td>5.031332e-05</td>
+                  <td>0.0015067797</td>
+                  <td>0.0014564663</td>
+                  <td> 29.94793</td>
                   <td>K03324</td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000004_600 </td>
-                  <td>2.316717e-04</td>
-                  <td>6.538927e-03</td>
-                  <td>6.307255e-03</td>
-                  <td> 28.22497</td>
+                  <td>6.479117e-05</td>
+                  <td>0.0016817496</td>
+                  <td>0.0016169584</td>
+                  <td> 25.95646</td>
                   <td>NA    </td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000004_194 </td>
-                  <td>4.800048e-04</td>
-                  <td>1.283216e-02</td>
-                  <td>1.235216e-02</td>
-                  <td> 26.73340</td>
+                  <td>1.966510e-04</td>
+                  <td>0.0048346211</td>
+                  <td>0.0046379701</td>
+                  <td> 24.58478</td>
                   <td>K00705</td>
                   <td>GH77                                                           </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000004_267 </td>
-                  <td>7.469827e-04</td>
-                  <td>1.957435e-02</td>
-                  <td>1.882737e-02</td>
-                  <td> 26.20456</td>
+                  <td>2.702977e-04</td>
+                  <td>0.0065137545</td>
+                  <td>0.0062434568</td>
+                  <td> 24.09844</td>
                   <td>K21573</td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000007_21  </td>
-                  <td>1.233731e-04</td>
-                  <td>3.128390e-03</td>
-                  <td>3.005017e-03</td>
-                  <td> 25.35714</td>
+                  <td>3.708419e-04</td>
+                  <td>0.0086477126</td>
+                  <td>0.0082768707</td>
+                  <td> 23.31913</td>
                   <td>NA    </td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_3   </td>
-                  <td>2.261180e-05</td>
-                  <td>5.574612e-04</td>
-                  <td>5.348494e-04</td>
-                  <td> 24.65355</td>
+                  <td>1.122545e-04</td>
+                  <td>0.0025450453</td>
+                  <td>0.0024327908</td>
+                  <td> 22.67209</td>
                   <td>NA    </td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000004_263 </td>
-                  <td>1.614562e-04</td>
-                  <td>3.784712e-03</td>
-                  <td>3.623256e-03</td>
-                  <td> 23.44111</td>
+                  <td>9.896068e-05</td>
+                  <td>0.0021333049</td>
+                  <td>0.0020343442</td>
+                  <td> 21.55710</td>
                   <td>NA    </td>
                   <td>GH13; GH13_14; GH13_1; GH13_32; GH13_36; GH13_5; GH13_6; GH13_7</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_1329</td>
-                  <td>2.261180e-05</td>
-                  <td>5.101422e-04</td>
-                  <td>4.875304e-04</td>
-                  <td> 22.56089</td>
+                  <td>5.796320e-05</td>
+                  <td>0.0012025985</td>
+                  <td>0.0011446353</td>
+                  <td> 20.74762</td>
                   <td>K07107</td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_516 </td>
-                  <td>1.808944e-04</td>
-                  <td>4.063871e-03</td>
-                  <td>3.882977e-03</td>
-                  <td> 22.46544</td>
+                  <td>1.167447e-04</td>
+                  <td>0.0024119272</td>
+                  <td>0.0022951825</td>
+                  <td> 20.65984</td>
                   <td>K03321</td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000007_115 </td>
-                  <td>1.983491e-06</td>
-                  <td>4.395499e-05</td>
-                  <td>4.197150e-05</td>
-                  <td> 22.16042</td>
+                  <td>8.000597e-06</td>
+                  <td>0.0001630469</td>
+                  <td>0.0001550463</td>
+                  <td> 20.37934</td>
                   <td>NA    </td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000008_110 </td>
-                  <td>3.887642e-05</td>
-                  <td>8.398990e-04</td>
-                  <td>8.010226e-04</td>
-                  <td> 21.60433</td>
+                  <td>5.351667e-05</td>
+                  <td>0.0010632660</td>
+                  <td>0.0010097493</td>
+                  <td> 19.86794</td>
                   <td>K00941</td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000008_109 </td>
-                  <td>6.132954e-04</td>
-                  <td>1.258426e-02</td>
-                  <td>1.197096e-02</td>
-                  <td> 20.51908</td>
+                  <td>1.906146e-03</td>
+                  <td>0.0359688072</td>
+                  <td>0.0340626616</td>
+                  <td> 18.86992</td>
                   <td>NA    </td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000008_111 </td>
-                  <td>1.824812e-05</td>
-                  <td>3.464566e-04</td>
-                  <td>3.282085e-04</td>
-                  <td> 18.98588</td>
+                  <td>3.735204e-05</td>
+                  <td>0.0006521646</td>
+                  <td>0.0006148126</td>
+                  <td> 17.45995</td>
                   <td>NA    </td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000003_221 </td>
-                  <td>1.380510e-04</td>
-                  <td>2.588401e-03</td>
-                  <td>2.450350e-03</td>
-                  <td> 18.74961</td>
+                  <td>8.664811e-05</td>
+                  <td>0.0014940439</td>
+                  <td>0.0014073958</td>
+                  <td> 17.24266</td>
                   <td>K00764</td>
                   <td>NA                                                             </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_prevotella_ruminicola@contig_00000004_737 </td>
-                  <td>1.503486e-04</td>
-                  <td>2.785847e-03</td>
-                  <td>2.635498e-03</td>
-                  <td> 18.52925</td>
+                  <td>5.055259e-05</td>
+                  <td>0.0008614168</td>
+                  <td>0.0008108642</td>
+                  <td> 17.04001</td>
                   <td>K21573</td>
                   <td>NA                                                             </td>
                 </tr>
@@ -3748,40 +3760,40 @@ window.addEventListener('load', function () { styleCell_ty47ajkbup6bhsuw3amk(0, 
 </div>
 <div id="eubacterium-hallii" class="section level2 hasAnchor" number="3.4">
 <h2><span class="header-section-number">3.4</span> Eubacterium hallii<a href="mix-vs-isolates.html#eubacterium-hallii" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb18-1"><a href="mix-vs-isolates.html#cb18-1" tabindex="-1"></a>gene_counts_pair <span class="ot">&lt;-</span> gene_counts <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="mix-vs-isolates.html#cb18-2" tabindex="-1"></a>  <span class="fu">filter</span>(sample <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;C300216&quot;</span>,<span class="st">&quot;C300203&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb18-3"><a href="mix-vs-isolates.html#cb18-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">case_when</span>(</span>
-<span id="cb18-4"><a href="mix-vs-isolates.html#cb18-4" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300216&quot;</span> <span class="sc">~</span> <span class="st">&quot;mix&quot;</span>,</span>
-<span id="cb18-5"><a href="mix-vs-isolates.html#cb18-5" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300203&quot;</span> <span class="sc">~</span> <span class="st">&quot;isolate&quot;</span>,</span>
-<span id="cb18-6"><a href="mix-vs-isolates.html#cb18-6" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> sample  <span class="co"># Retain other values as-is</span></span>
-<span id="cb18-7"><a href="mix-vs-isolates.html#cb18-7" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-8"><a href="mix-vs-isolates.html#cb18-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(gene, <span class="st">&quot;anaerobutyricum_hallii&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb18-9"><a href="mix-vs-isolates.html#cb18-9" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-10"><a href="mix-vs-isolates.html#cb18-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total=</span><span class="fu">sum</span>(count)) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-11"><a href="mix-vs-isolates.html#cb18-11" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb18-12"><a href="mix-vs-isolates.html#cb18-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">count=</span>count<span class="sc">/</span>total) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-13"><a href="mix-vs-isolates.html#cb18-13" tabindex="-1"></a>  <span class="fu">select</span>(gene,sample,count) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-14"><a href="mix-vs-isolates.html#cb18-14" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sample, <span class="at">values_from =</span> count) <span class="sc">%&gt;%</span></span>
-<span id="cb18-15"><a href="mix-vs-isolates.html#cb18-15" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">everything</span>(), <span class="sc">~</span> . <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb18-16"><a href="mix-vs-isolates.html#cb18-16" tabindex="-1"></a>  <span class="fu">left_join</span>(gene_annotations,<span class="at">by=</span><span class="st">&quot;gene&quot;</span>)</span>
-<span id="cb18-17"><a href="mix-vs-isolates.html#cb18-17" tabindex="-1"></a></span>
-<span id="cb18-18"><a href="mix-vs-isolates.html#cb18-18" tabindex="-1"></a><span class="co"># Top overexpression in mixture</span></span>
-<span id="cb18-19"><a href="mix-vs-isolates.html#cb18-19" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
-<span id="cb18-20"><a href="mix-vs-isolates.html#cb18-20" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> mix<span class="sc">-</span>isolate) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-21"><a href="mix-vs-isolates.html#cb18-21" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> mix<span class="sc">/</span>isolate) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-22"><a href="mix-vs-isolates.html#cb18-22" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-23"><a href="mix-vs-isolates.html#cb18-23" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-24"><a href="mix-vs-isolates.html#cb18-24" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-25"><a href="mix-vs-isolates.html#cb18-25" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb19-1"><a href="mix-vs-isolates.html#cb19-1" tabindex="-1"></a>gene_counts_pair <span class="ot">&lt;-</span> gene_counts <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="mix-vs-isolates.html#cb19-2" tabindex="-1"></a>  <span class="fu">filter</span>(sample <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;C300216&quot;</span>,<span class="st">&quot;C300203&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="mix-vs-isolates.html#cb19-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">case_when</span>(</span>
+<span id="cb19-4"><a href="mix-vs-isolates.html#cb19-4" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300216&quot;</span> <span class="sc">~</span> <span class="st">&quot;mix&quot;</span>,</span>
+<span id="cb19-5"><a href="mix-vs-isolates.html#cb19-5" tabindex="-1"></a>    sample <span class="sc">==</span> <span class="st">&quot;C300203&quot;</span> <span class="sc">~</span> <span class="st">&quot;isolate&quot;</span>,</span>
+<span id="cb19-6"><a href="mix-vs-isolates.html#cb19-6" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> sample  <span class="co"># Retain other values as-is</span></span>
+<span id="cb19-7"><a href="mix-vs-isolates.html#cb19-7" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-8"><a href="mix-vs-isolates.html#cb19-8" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(gene, <span class="st">&quot;anaerobutyricum_hallii&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-9"><a href="mix-vs-isolates.html#cb19-9" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-10"><a href="mix-vs-isolates.html#cb19-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total=</span><span class="fu">sum</span>(norm)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-11"><a href="mix-vs-isolates.html#cb19-11" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb19-12"><a href="mix-vs-isolates.html#cb19-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">norm=</span>norm<span class="sc">/</span>total) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-13"><a href="mix-vs-isolates.html#cb19-13" tabindex="-1"></a>  <span class="fu">select</span>(gene,sample,norm) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-14"><a href="mix-vs-isolates.html#cb19-14" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sample, <span class="at">values_from =</span> norm) <span class="sc">%&gt;%</span></span>
+<span id="cb19-15"><a href="mix-vs-isolates.html#cb19-15" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">everything</span>(), <span class="sc">~</span> . <span class="sc">!=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-16"><a href="mix-vs-isolates.html#cb19-16" tabindex="-1"></a>  <span class="fu">left_join</span>(gene_annotations,<span class="at">by=</span><span class="st">&quot;gene&quot;</span>)</span>
+<span id="cb19-17"><a href="mix-vs-isolates.html#cb19-17" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="mix-vs-isolates.html#cb19-18" tabindex="-1"></a><span class="co"># Top overexpression in mixture</span></span>
+<span id="cb19-19"><a href="mix-vs-isolates.html#cb19-19" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
+<span id="cb19-20"><a href="mix-vs-isolates.html#cb19-20" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> mix<span class="sc">-</span>isolate) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-21"><a href="mix-vs-isolates.html#cb19-21" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> mix<span class="sc">/</span>isolate) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-22"><a href="mix-vs-isolates.html#cb19-22" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-23"><a href="mix-vs-isolates.html#cb19-23" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-24"><a href="mix-vs-isolates.html#cb19-24" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-25"><a href="mix-vs-isolates.html#cb19-25" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
-      function styleCell_rdc9dkitly7hp9bx2zow(i, j, css_id) {
-        var table = document.getElementById("tinytable_rdc9dkitly7hp9bx2zow");
+      function styleCell_hrdvvkqa7rhfcgxs3q4f(i, j, css_id) {
+        var table = document.getElementById("tinytable_hrdvvkqa7rhfcgxs3q4f");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_rdc9dkitly7hp9bx2zow');
+        var table = document.getElementById('tinytable_hrdvvkqa7rhfcgxs3q4f');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -3789,8 +3801,8 @@ window.addEventListener('load', function () { styleCell_ty47ajkbup6bhsuw3amk(0, 
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_rdc9dkitly7hp9bx2zow(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_rdc9dkitly7hp9bx2zow");
+      function spanCell_hrdvvkqa7rhfcgxs3q4f(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_hrdvvkqa7rhfcgxs3q4f");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -3816,20 +3828,20 @@ window.addEventListener('load', function () { styleCell_ty47ajkbup6bhsuw3amk(0, 
         targetCell.rowSpan = rowspan;
         targetCell.colSpan = colspan;
       }
-window.addEventListener('load', function () { styleCell_rdc9dkitly7hp9bx2zow(0, 0, 'tinytable_css_idbjrx52mv7s1ptvnqvhj1') })
-window.addEventListener('load', function () { styleCell_rdc9dkitly7hp9bx2zow(0, 1, 'tinytable_css_idbjrx52mv7s1ptvnqvhj1') })
-window.addEventListener('load', function () { styleCell_rdc9dkitly7hp9bx2zow(0, 2, 'tinytable_css_idbjrx52mv7s1ptvnqvhj1') })
-window.addEventListener('load', function () { styleCell_rdc9dkitly7hp9bx2zow(0, 3, 'tinytable_css_idbjrx52mv7s1ptvnqvhj1') })
-window.addEventListener('load', function () { styleCell_rdc9dkitly7hp9bx2zow(0, 4, 'tinytable_css_idbjrx52mv7s1ptvnqvhj1') })
-window.addEventListener('load', function () { styleCell_rdc9dkitly7hp9bx2zow(0, 5, 'tinytable_css_idbjrx52mv7s1ptvnqvhj1') })
-window.addEventListener('load', function () { styleCell_rdc9dkitly7hp9bx2zow(0, 6, 'tinytable_css_idbjrx52mv7s1ptvnqvhj1') })
+window.addEventListener('load', function () { styleCell_hrdvvkqa7rhfcgxs3q4f(0, 0, 'tinytable_css_idm2mawh4v1rrd2jnjw1vv') })
+window.addEventListener('load', function () { styleCell_hrdvvkqa7rhfcgxs3q4f(0, 1, 'tinytable_css_idm2mawh4v1rrd2jnjw1vv') })
+window.addEventListener('load', function () { styleCell_hrdvvkqa7rhfcgxs3q4f(0, 2, 'tinytable_css_idm2mawh4v1rrd2jnjw1vv') })
+window.addEventListener('load', function () { styleCell_hrdvvkqa7rhfcgxs3q4f(0, 3, 'tinytable_css_idm2mawh4v1rrd2jnjw1vv') })
+window.addEventListener('load', function () { styleCell_hrdvvkqa7rhfcgxs3q4f(0, 4, 'tinytable_css_idm2mawh4v1rrd2jnjw1vv') })
+window.addEventListener('load', function () { styleCell_hrdvvkqa7rhfcgxs3q4f(0, 5, 'tinytable_css_idm2mawh4v1rrd2jnjw1vv') })
+window.addEventListener('load', function () { styleCell_hrdvvkqa7rhfcgxs3q4f(0, 6, 'tinytable_css_idm2mawh4v1rrd2jnjw1vv') })
     </script>
 
     <style>
-.table td.tinytable_css_idbjrx52mv7s1ptvnqvhj1, .table th.tinytable_css_idbjrx52mv7s1ptvnqvhj1 { border-bottom: solid 0.1em #d3d8dc; }
+.table td.tinytable_css_idm2mawh4v1rrd2jnjw1vv, .table th.tinytable_css_idm2mawh4v1rrd2jnjw1vv { border-bottom: solid 0.1em #d3d8dc; }
 </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_rdc9dkitly7hp9bx2zow" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_hrdvvkqa7rhfcgxs3q4f" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -3846,181 +3858,181 @@ window.addEventListener('load', function () { styleCell_rdc9dkitly7hp9bx2zow(0, 
         <tbody>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000112_1  </td>
-                  <td>1.979828e-05</td>
-                  <td>1.137796e-07</td>
-                  <td>1.968450e-05</td>
-                  <td>174.00562</td>
+                  <td>1.250096e-04</td>
+                  <td>7.027727e-07</td>
+                  <td>1.243068e-04</td>
+                  <td>177.88056</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000079_8  </td>
-                  <td>2.602060e-04</td>
-                  <td>3.204791e-06</td>
-                  <td>2.570012e-04</td>
-                  <td> 81.19282</td>
+                  <td>2.015761e-03</td>
+                  <td>2.428601e-05</td>
+                  <td>1.991475e-03</td>
+                  <td> 83.00090</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000129_41 </td>
-                  <td>5.090987e-05</td>
-                  <td>6.447509e-07</td>
-                  <td>5.026512e-05</td>
-                  <td> 78.96053</td>
+                  <td>3.754574e-04</td>
+                  <td>4.651418e-06</td>
+                  <td>3.708060e-04</td>
+                  <td> 80.71891</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000147_18 </td>
-                  <td>7.919314e-05</td>
-                  <td>1.024016e-06</td>
-                  <td>7.816912e-05</td>
-                  <td> 77.33583</td>
+                  <td>3.303421e-04</td>
+                  <td>4.178477e-06</td>
+                  <td>3.261637e-04</td>
+                  <td> 79.05803</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000147_19 </td>
-                  <td>5.175837e-04</td>
-                  <td>7.149149e-06</td>
-                  <td>5.104346e-04</td>
-                  <td> 72.39794</td>
+                  <td>5.490723e-04</td>
+                  <td>7.418875e-06</td>
+                  <td>5.416534e-04</td>
+                  <td> 74.01018</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000147_23 </td>
-                  <td>5.175837e-04</td>
-                  <td>7.187076e-06</td>
-                  <td>5.103966e-04</td>
-                  <td> 72.01589</td>
+                  <td>1.694403e-04</td>
+                  <td>2.301564e-06</td>
+                  <td>1.671387e-04</td>
+                  <td> 73.61962</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000165_10 </td>
-                  <td>1.414163e-05</td>
-                  <td>2.465224e-07</td>
-                  <td>1.389511e-05</td>
-                  <td> 57.36449</td>
+                  <td>5.132565e-05</td>
+                  <td>8.752380e-07</td>
+                  <td>5.045042e-05</td>
+                  <td> 58.64194</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000165_9  </td>
-                  <td>1.696996e-05</td>
-                  <td>3.034122e-07</td>
-                  <td>1.666655e-05</td>
-                  <td> 55.93038</td>
+                  <td>6.628839e-05</td>
+                  <td>1.159376e-06</td>
+                  <td>6.512901e-05</td>
+                  <td> 57.17589</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000147_14 </td>
-                  <td>8.767811e-05</td>
-                  <td>1.573951e-06</td>
-                  <td>8.610416e-05</td>
-                  <td> 55.70576</td>
+                  <td>9.881130e-05</td>
+                  <td>1.735167e-06</td>
+                  <td>9.707613e-05</td>
+                  <td> 56.94627</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000147_25 </td>
-                  <td>1.668712e-04</td>
-                  <td>3.223754e-06</td>
-                  <td>1.636475e-04</td>
-                  <td> 51.76302</td>
+                  <td>1.080290e-04</td>
+                  <td>2.041528e-06</td>
+                  <td>1.059874e-04</td>
+                  <td> 52.91573</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000125_8  </td>
-                  <td>5.656653e-06</td>
-                  <td>1.137796e-07</td>
-                  <td>5.542873e-06</td>
-                  <td> 49.71589</td>
+                  <td>2.425436e-05</td>
+                  <td>4.772317e-07</td>
+                  <td>2.377712e-05</td>
+                  <td> 50.82302</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000147_40 </td>
-                  <td>7.070816e-05</td>
-                  <td>1.441208e-06</td>
-                  <td>6.926695e-05</td>
-                  <td> 49.06173</td>
+                  <td>9.338622e-05</td>
+                  <td>1.861979e-06</td>
+                  <td>9.152424e-05</td>
+                  <td> 50.15429</td>
                   <td>K06133</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000134_20 </td>
-                  <td>6.787983e-05</td>
-                  <td>1.384318e-06</td>
-                  <td>6.649551e-05</td>
-                  <td> 49.03485</td>
+                  <td>1.673161e-04</td>
+                  <td>3.337857e-06</td>
+                  <td>1.639783e-04</td>
+                  <td> 50.12681</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000112_180</td>
-                  <td>2.325167e-02</td>
-                  <td>4.755796e-04</td>
-                  <td>2.277609e-02</td>
-                  <td> 48.89122</td>
+                  <td>9.778727e-03</td>
+                  <td>1.956528e-04</td>
+                  <td>9.583074e-03</td>
+                  <td> 49.97999</td>
                   <td>K04759</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000147_69 </td>
-                  <td>6.787983e-05</td>
-                  <td>1.403281e-06</td>
-                  <td>6.647655e-05</td>
-                  <td> 48.37222</td>
+                  <td>1.646743e-04</td>
+                  <td>3.330156e-06</td>
+                  <td>1.613442e-04</td>
+                  <td> 49.44942</td>
                   <td>K07171</td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000147_21 </td>
-                  <td>7.636481e-05</td>
-                  <td>1.592914e-06</td>
-                  <td>7.477189e-05</td>
-                  <td> 47.94032</td>
+                  <td>2.082789e-04</td>
+                  <td>4.249904e-06</td>
+                  <td>2.040290e-04</td>
+                  <td> 49.00791</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000151_7  </td>
-                  <td>1.979828e-05</td>
-                  <td>4.361550e-07</td>
-                  <td>1.936213e-05</td>
-                  <td> 45.39277</td>
+                  <td>7.271475e-05</td>
+                  <td>1.567006e-06</td>
+                  <td>7.114775e-05</td>
+                  <td> 46.40362</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000147_29 </td>
-                  <td>1.159614e-04</td>
-                  <td>2.692783e-06</td>
-                  <td>1.132686e-04</td>
-                  <td> 43.06376</td>
+                  <td>9.935044e-05</td>
+                  <td>2.256797e-06</td>
+                  <td>9.709364e-05</td>
+                  <td> 44.02275</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000094_1  </td>
-                  <td>4.242489e-05</td>
-                  <td>1.024016e-06</td>
-                  <td>4.140088e-05</td>
-                  <td> 41.42991</td>
+                  <td>6.801765e-05</td>
+                  <td>1.605988e-06</td>
+                  <td>6.641166e-05</td>
+                  <td> 42.35251</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000020_3  </td>
-                  <td>2.545494e-05</td>
-                  <td>6.257876e-07</td>
-                  <td>2.482915e-05</td>
-                  <td> 40.67664</td>
+                  <td>2.256355e-04</td>
+                  <td>5.426216e-06</td>
+                  <td>2.202093e-04</td>
+                  <td> 41.58247</td>
                   <td>NA    </td>
                   <td>NA</td>
                 </tr>
@@ -4028,23 +4040,23 @@ window.addEventListener('load', function () { styleCell_rdc9dkitly7hp9bx2zow(0, 
       </table>
     </div>
 <!-- hack to avoid NA insertion in last line -->
-<div class="sourceCode" id="cb19"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb19-1"><a href="mix-vs-isolates.html#cb19-1" tabindex="-1"></a><span class="co"># Top overexpression in isolate</span></span>
-<span id="cb19-2"><a href="mix-vs-isolates.html#cb19-2" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
-<span id="cb19-3"><a href="mix-vs-isolates.html#cb19-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> isolate<span class="sc">-</span>mix) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-4"><a href="mix-vs-isolates.html#cb19-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> isolate<span class="sc">/</span>mix) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-5"><a href="mix-vs-isolates.html#cb19-5" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-6"><a href="mix-vs-isolates.html#cb19-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-7"><a href="mix-vs-isolates.html#cb19-7" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-8"><a href="mix-vs-isolates.html#cb19-8" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r script-source"><code class="sourceCode r"><span id="cb20-1"><a href="mix-vs-isolates.html#cb20-1" tabindex="-1"></a><span class="co"># Top overexpression in isolate</span></span>
+<span id="cb20-2"><a href="mix-vs-isolates.html#cb20-2" tabindex="-1"></a>gene_counts_pair <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="mix-vs-isolates.html#cb20-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_abs =</span> isolate<span class="sc">-</span>mix) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-4"><a href="mix-vs-isolates.html#cb20-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rel =</span> isolate<span class="sc">/</span>mix) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-5"><a href="mix-vs-isolates.html#cb20-5" tabindex="-1"></a>  <span class="fu">select</span>(gene,mix,isolate,difference_abs,difference_rel,ko_id,cazy_ids) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-6"><a href="mix-vs-isolates.html#cb20-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>difference_rel) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-7"><a href="mix-vs-isolates.html#cb20-7" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-8"><a href="mix-vs-isolates.html#cb20-8" tabindex="-1"></a>  <span class="fu">tt</span>()</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
-      function styleCell_d3do0m898i36mcpsem7v(i, j, css_id) {
-        var table = document.getElementById("tinytable_d3do0m898i36mcpsem7v");
+      function styleCell_tu93shnbmz4dc6fjyjox(i, j, css_id) {
+        var table = document.getElementById("tinytable_tu93shnbmz4dc6fjyjox");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_d3do0m898i36mcpsem7v');
+        var table = document.getElementById('tinytable_tu93shnbmz4dc6fjyjox');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -4052,8 +4064,8 @@ window.addEventListener('load', function () { styleCell_rdc9dkitly7hp9bx2zow(0, 
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_d3do0m898i36mcpsem7v(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_d3do0m898i36mcpsem7v");
+      function spanCell_tu93shnbmz4dc6fjyjox(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_tu93shnbmz4dc6fjyjox");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -4079,20 +4091,20 @@ window.addEventListener('load', function () { styleCell_rdc9dkitly7hp9bx2zow(0, 
         targetCell.rowSpan = rowspan;
         targetCell.colSpan = colspan;
       }
-window.addEventListener('load', function () { styleCell_d3do0m898i36mcpsem7v(0, 0, 'tinytable_css_idiy7ivwhloxop5qci5c47') })
-window.addEventListener('load', function () { styleCell_d3do0m898i36mcpsem7v(0, 1, 'tinytable_css_idiy7ivwhloxop5qci5c47') })
-window.addEventListener('load', function () { styleCell_d3do0m898i36mcpsem7v(0, 2, 'tinytable_css_idiy7ivwhloxop5qci5c47') })
-window.addEventListener('load', function () { styleCell_d3do0m898i36mcpsem7v(0, 3, 'tinytable_css_idiy7ivwhloxop5qci5c47') })
-window.addEventListener('load', function () { styleCell_d3do0m898i36mcpsem7v(0, 4, 'tinytable_css_idiy7ivwhloxop5qci5c47') })
-window.addEventListener('load', function () { styleCell_d3do0m898i36mcpsem7v(0, 5, 'tinytable_css_idiy7ivwhloxop5qci5c47') })
-window.addEventListener('load', function () { styleCell_d3do0m898i36mcpsem7v(0, 6, 'tinytable_css_idiy7ivwhloxop5qci5c47') })
+window.addEventListener('load', function () { styleCell_tu93shnbmz4dc6fjyjox(0, 0, 'tinytable_css_idlthd4wmcgws4ajl7wl44') })
+window.addEventListener('load', function () { styleCell_tu93shnbmz4dc6fjyjox(0, 1, 'tinytable_css_idlthd4wmcgws4ajl7wl44') })
+window.addEventListener('load', function () { styleCell_tu93shnbmz4dc6fjyjox(0, 2, 'tinytable_css_idlthd4wmcgws4ajl7wl44') })
+window.addEventListener('load', function () { styleCell_tu93shnbmz4dc6fjyjox(0, 3, 'tinytable_css_idlthd4wmcgws4ajl7wl44') })
+window.addEventListener('load', function () { styleCell_tu93shnbmz4dc6fjyjox(0, 4, 'tinytable_css_idlthd4wmcgws4ajl7wl44') })
+window.addEventListener('load', function () { styleCell_tu93shnbmz4dc6fjyjox(0, 5, 'tinytable_css_idlthd4wmcgws4ajl7wl44') })
+window.addEventListener('load', function () { styleCell_tu93shnbmz4dc6fjyjox(0, 6, 'tinytable_css_idlthd4wmcgws4ajl7wl44') })
     </script>
 
     <style>
-.table td.tinytable_css_idiy7ivwhloxop5qci5c47, .table th.tinytable_css_idiy7ivwhloxop5qci5c47 { border-bottom: solid 0.1em #d3d8dc; }
+.table td.tinytable_css_idlthd4wmcgws4ajl7wl44, .table th.tinytable_css_idlthd4wmcgws4ajl7wl44 { border-bottom: solid 0.1em #d3d8dc; }
 </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_d3do0m898i36mcpsem7v" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_tu93shnbmz4dc6fjyjox" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -4109,181 +4121,181 @@ window.addEventListener('load', function () { styleCell_d3do0m898i36mcpsem7v(0, 
         <tbody>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000045_7 </td>
-                  <td>8.484979e-05</td>
-                  <td>5.686191e-03</td>
-                  <td>5.601341e-03</td>
-                  <td>67.01479</td>
+                  <td>1.203389e-04</td>
+                  <td>7.888811e-03</td>
+                  <td>7.768472e-03</td>
+                  <td>65.55494</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000045_8 </td>
-                  <td>5.656653e-05</td>
-                  <td>2.561671e-03</td>
-                  <td>2.505105e-03</td>
-                  <td>45.28599</td>
+                  <td>6.772320e-05</td>
+                  <td>3.000103e-03</td>
+                  <td>2.932380e-03</td>
+                  <td>44.29948</td>
                   <td>K08600</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000008_9 </td>
-                  <td>2.828326e-06</td>
-                  <td>1.212701e-04</td>
-                  <td>1.184417e-04</td>
-                  <td>42.87697</td>
+                  <td>8.465400e-06</td>
+                  <td>3.550638e-04</td>
+                  <td>3.465984e-04</td>
+                  <td>41.94294</td>
                   <td>K03671</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000112_75</td>
-                  <td>2.828326e-06</td>
-                  <td>1.173826e-04</td>
-                  <td>1.145543e-04</td>
-                  <td>41.50249</td>
+                  <td>3.735449e-06</td>
+                  <td>1.516533e-04</td>
+                  <td>1.479178e-04</td>
+                  <td>40.59840</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000048_1 </td>
-                  <td>8.484979e-06</td>
-                  <td>3.339810e-04</td>
-                  <td>3.254960e-04</td>
-                  <td>39.36144</td>
+                  <td>1.995416e-05</td>
+                  <td>7.683147e-04</td>
+                  <td>7.483605e-04</td>
+                  <td>38.50399</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000107_38</td>
-                  <td>8.484979e-06</td>
-                  <td>3.074893e-04</td>
-                  <td>2.990043e-04</td>
-                  <td>36.23925</td>
+                  <td>1.707867e-05</td>
+                  <td>6.054356e-04</td>
+                  <td>5.883570e-04</td>
+                  <td>35.44982</td>
                   <td>K07738</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000087_17</td>
-                  <td>2.828326e-06</td>
-                  <td>8.963934e-05</td>
-                  <td>8.681101e-05</td>
-                  <td>31.69342</td>
+                  <td>1.749895e-05</td>
+                  <td>5.425201e-04</td>
+                  <td>5.250212e-04</td>
+                  <td>31.00301</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000025_3 </td>
-                  <td>1.668712e-04</td>
-                  <td>4.818394e-03</td>
-                  <td>4.651523e-03</td>
-                  <td>28.87492</td>
+                  <td>1.683077e-04</td>
+                  <td>4.754005e-03</td>
+                  <td>4.585697e-03</td>
+                  <td>28.24591</td>
                   <td>K07301</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000112_91</td>
-                  <td>3.111159e-05</td>
-                  <td>8.975691e-04</td>
-                  <td>8.664575e-04</td>
-                  <td>28.84999</td>
+                  <td>1.215287e-04</td>
+                  <td>3.429725e-03</td>
+                  <td>3.308197e-03</td>
+                  <td>28.22152</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000120_6 </td>
-                  <td>1.414163e-05</td>
-                  <td>3.809150e-04</td>
-                  <td>3.667734e-04</td>
-                  <td>26.93572</td>
+                  <td>3.661999e-05</td>
+                  <td>9.648984e-04</td>
+                  <td>9.282784e-04</td>
+                  <td>26.34895</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000132_16</td>
-                  <td>5.656653e-06</td>
-                  <td>1.517630e-04</td>
-                  <td>1.461063e-04</td>
-                  <td>26.82911</td>
+                  <td>3.122567e-06</td>
+                  <td>8.195073e-05</td>
+                  <td>7.882817e-05</td>
+                  <td>26.24467</td>
                   <td>K06409</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000070_9 </td>
-                  <td>2.064678e-04</td>
-                  <td>5.267918e-03</td>
-                  <td>5.061450e-03</td>
-                  <td>25.51448</td>
+                  <td>1.884515e-04</td>
+                  <td>4.703500e-03</td>
+                  <td>4.515048e-03</td>
+                  <td>24.95867</td>
                   <td>K20109</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000083_11</td>
-                  <td>1.696996e-04</td>
-                  <td>3.988410e-03</td>
-                  <td>3.818710e-03</td>
-                  <td>23.50277</td>
+                  <td>1.717240e-04</td>
+                  <td>3.948070e-03</td>
+                  <td>3.776346e-03</td>
+                  <td>22.99079</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000129_32</td>
-                  <td>5.656653e-05</td>
-                  <td>1.322536e-03</td>
-                  <td>1.265969e-03</td>
-                  <td>23.38018</td>
+                  <td>2.459758e-04</td>
+                  <td>5.625680e-03</td>
+                  <td>5.379704e-03</td>
+                  <td>22.87087</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000154_9 </td>
-                  <td>2.828326e-05</td>
-                  <td>6.436700e-04</td>
-                  <td>6.153867e-04</td>
-                  <td>22.75798</td>
+                  <td>2.862067e-05</td>
+                  <td>6.371598e-04</td>
+                  <td>6.085391e-04</td>
+                  <td>22.26222</td>
                   <td>K01567</td>
                   <td>CE4</td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000099_1 </td>
-                  <td>5.656653e-06</td>
-                  <td>1.256885e-04</td>
-                  <td>1.200318e-04</td>
-                  <td>22.21959</td>
+                  <td>5.506533e-06</td>
+                  <td>1.196876e-04</td>
+                  <td>1.141810e-04</td>
+                  <td>21.73556</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000076_5 </td>
-                  <td>3.959657e-05</td>
-                  <td>8.498765e-04</td>
-                  <td>8.102799e-04</td>
-                  <td>21.46339</td>
+                  <td>4.912894e-05</td>
+                  <td>1.031503e-03</td>
+                  <td>9.823740e-04</td>
+                  <td>20.99583</td>
                   <td>K00059</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000154_10</td>
-                  <td>5.939485e-05</td>
-                  <td>1.268434e-03</td>
-                  <td>1.209039e-03</td>
-                  <td>21.35595</td>
+                  <td>9.572414e-05</td>
+                  <td>1.999748e-03</td>
+                  <td>1.904023e-03</td>
+                  <td>20.89073</td>
                   <td>K23242</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000164_2 </td>
-                  <td>3.111159e-04</td>
-                  <td>6.199242e-03</td>
-                  <td>5.888126e-03</td>
-                  <td>19.92583</td>
+                  <td>3.346648e-04</td>
+                  <td>6.523208e-03</td>
+                  <td>6.188543e-03</td>
+                  <td>19.49176</td>
                   <td>K00973</td>
                   <td>NA </td>
                 </tr>
                 <tr>
                   <td>BGU:bin_anaerobutyricum_hallii@contig_00000045_9 </td>
-                  <td>8.202146e-05</td>
-                  <td>1.545809e-03</td>
-                  <td>1.463788e-03</td>
-                  <td>18.84640</td>
+                  <td>7.622274e-05</td>
+                  <td>1.405231e-03</td>
+                  <td>1.329008e-03</td>
+                  <td>18.43585</td>
                   <td>NA    </td>
                   <td>NA </td>
                 </tr>

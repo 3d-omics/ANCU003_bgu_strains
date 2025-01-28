@@ -7,25 +7,32 @@ Note this is a rapid preliminary analysis, so results should not be interpreted 
 Data are loaded from the repository, while the metadata are directly fetched from the 3D'omics Airtable database.
 
 ```{r load_data, message=F, warning=F}
-gene_counts <- read_tsv("data/gene_counts.tsv") %>% 
-  select(-Chr,-Start,-End,-Strand,-Length) %>% 
-  pivot_longer(!Geneid, names_to="sample", values_to="count") %>%
-  separate(sample, into=c("sample", "library"),sep="\\.") %>% 
-  group_by(Geneid,sample) %>% 
-  summarise(count=sum(count)) %>% 
-  dplyr::rename(gene=Geneid)
-
-gene_counts_relative <- gene_counts %>% 
-  group_by(sample) %>% 
-  mutate(total=sum(count)) %>% 
-  rowwise() %>% 
-  mutate(count=count/total) %>% 
-  select(gene,sample,count)
-
 gene_annotations <- read_tsv("data/dram.annotations.tsv.gz") %>% 
   dplyr::rename(gene=1,genome=2,contig=3) %>% 
-  mutate(gene = gsub("BGU:[^ ]*BGU:", "BGU:", gene)) # fix naming error
+  mutate(gene = gsub("BGU:[^ ]*BGU:", "BGU:", gene)) %>%  # fix naming error
+  mutate(length=end_position-start_position)
 
+gene_counts <- read_tsv("data/gene_counts.tsv") %>% 
+  select(-Chr,-Start,-End,-Strand,-Length) %>% 
+  pivot_longer(!Geneid, names_to="sample", values_to="raw") %>%
+  separate(sample, into=c("sample", "library"),sep="\\.") %>% 
+  group_by(Geneid,sample) %>% 
+  summarise(raw=sum(raw)) %>% 
+  dplyr::rename(gene=Geneid)
+
+# Normalise by gene length
+gene_counts <- gene_counts %>% 
+  left_join(gene_annotations %>% select(gene,length),by="gene") %>% 
+  mutate(norm=raw*150/length) %>% 
+  select(gene,sample,raw,norm)
+
+# Transform to relative abundances (per sample)
+gene_counts <- gene_counts %>% 
+  group_by(sample) %>% 
+  mutate(total=sum(norm)) %>% 
+  rowwise() %>% 
+  mutate(rel=norm/total) %>% 
+  select(gene,sample,raw,norm,rel)
 
 genomes <- gene_annotations$genome %>% unique()
 
@@ -42,10 +49,12 @@ kegg_functions <- read_csv("data/kegg_functions_pivoted_clean.csv")
 
 ## Basic statistics
 
+### Sequencing depth per sample
+
 ```{r overall_stats, message=F, warning=F}
 gene_counts %>% 
   left_join(sample_metadata, by="sample") %>% 
-  ggplot(aes(x=count, y=Bacteria)) +
+  ggplot(aes(x=raw, y=Bacteria)) +
   geom_col()
 ```
 
@@ -54,13 +63,14 @@ gene_counts %>%
   separate(gene,into=c("bin","genome1","genome2"),sep="_",  remove = FALSE) %>% 
   mutate(genome=str_c(genome1," ",genome2)) %>%
   mutate(genome = sub("^(\\w)", "\\U\\1", genome, perl = TRUE)) %>% 
-  select(gene,genome,sample,count) %>% 
+  mutate(genome = str_remove(genome, "@contig")) %>% 
+  select(gene,genome,sample,raw) %>% 
   left_join(sample_metadata, by="sample") %>% 
   filter(genome == Bacteria) %>% 
   group_by(Bacteria) %>% 
   summarise(
         genes = n(),                        
-        expressed = sum(count > 1000) 
+        expressed = sum(raw > 1000) 
     ) %>% 
   mutate(percentage=expressed/genes*100) %>% 
   tt()
@@ -70,16 +80,33 @@ gene_counts %>%
 
 ### CAZY vs. non-CAZY gene expression
 
-```{r cazy_expression, warning=FALSE, comments="", message=FALSE, fig.height=14, fig.width=10, fig.fullwidth=TRUE}
+#### Raw reads
+
+```{r cazy_expression_raw, warning=FALSE, comments="", message=FALSE, fig.height=14, fig.width=10, fig.fullwidth=TRUE}
 gene_counts %>% 
   left_join(sample_metadata, by="sample") %>% 
   left_join(gene_annotations, by="gene") %>% 
   separate_rows(cazy_ids, sep = "; ")  %>% 
   mutate(cazy=ifelse(!is.na(cazy_ids),"cazy","no_cazy")) %>% 
-  select(Bacteria,count,cazy) %>% 
+  select(Bacteria,raw,cazy) %>% 
   group_by(Bacteria,cazy) %>% 
-  summarise(count=sum(count)) %>% 
-  ggplot(aes(x=count, y=Bacteria, fill=cazy)) +
+  summarise(raw=sum(raw)) %>% 
+  ggplot(aes(x=raw, y=Bacteria, fill=cazy)) +
+      geom_col()
+```
+
+#### Gene-size normalised
+
+```{r cazy_expression_norm, warning=FALSE, comments="", message=FALSE, fig.height=14, fig.width=10, fig.fullwidth=TRUE}
+gene_counts %>% 
+  left_join(sample_metadata, by="sample") %>% 
+  left_join(gene_annotations, by="gene") %>% 
+  separate_rows(cazy_ids, sep = "; ")  %>% 
+  mutate(cazy=ifelse(!is.na(cazy_ids),"cazy","no_cazy")) %>% 
+  select(Bacteria,norm,cazy) %>% 
+  group_by(Bacteria,cazy) %>% 
+  summarise(norm=sum(norm)) %>% 
+  ggplot(aes(x=norm, y=Bacteria, fill=cazy)) +
       geom_col()
 ```
 
@@ -91,13 +118,13 @@ gene_counts %>%
   left_join(gene_annotations, by="gene") %>% 
   separate_rows(cazy_ids, sep = "; ")  %>% 
   filter(!is.na(cazy_ids)) %>%
-  select(Bacteria,cazy_ids,count) %>% 
+  select(Bacteria,cazy_ids,norm) %>% 
   separate(cazy_ids,into="cazy2",sep="_", remove=FALSE) %>%
-  group_by(Bacteria,cazy2,count) %>% 
-  summarise(count=sum(count)) %>% 
-  filter(count>1000) %>% 
+  group_by(Bacteria,cazy2,norm) %>% 
+  summarise(norm=sum(norm)) %>% 
+  filter(norm>10) %>% 
   mutate(cazy1=str_sub(cazy2, 1, 2)) %>%
-  ggplot(aes(x=Bacteria,y=cazy2,fill=log(count)))+
+  ggplot(aes(x=Bacteria,y=cazy2,fill=log(norm)))+
     geom_tile() +
     scale_fill_gradient2(low = "white", high ="black") +
     facet_nested(cazy1 ~ ., space="free", scales="free") +
@@ -107,44 +134,44 @@ gene_counts %>%
 ## KEGG
 
 ```{r top_kegg_overview, message=F, warning=F}
-top_genes <- gene_counts_relative %>% 
+top_genes <- gene_counts %>% 
   left_join(sample_metadata, by="sample") %>% 
   left_join(gene_annotations, by="gene") %>% 
   #filter(!is.na(ko_id)) %>% 
-  select(Bacteria,ko_id,count) %>% 
+  select(Bacteria,ko_id,rel) %>% 
   #filter(Bacteria=="Bacteroides uniformis") %>% 
   group_by(Bacteria,ko_id) %>% 
-  summarise(count=sum(count)) %>% 
+  summarise(rel=sum(rel)) %>% 
   filter(!is.na(ko_id)) %>% 
-  filter(count>0.001) %>% 
-  arrange(-count) 
+  filter(rel>0.001) %>% 
+  arrange(-rel) 
 
 top_genes_sort <- top_genes %>% 
   group_by(ko_id) %>% 
-  summarise(count=mean(count)) %>% 
-  arrange(-count) %>% 
+  summarise(rel=mean(rel)) %>% 
+  arrange(-rel) %>% 
   pull(ko_id)
 
 top_genes %>% 
   mutate(ko_id=factor(ko_id,levels=top_genes_sort)) %>% 
-  ggplot(aes(y=Bacteria,x=ko_id,fill=-log(count))) + 
+  ggplot(aes(y=Bacteria,x=ko_id,fill=-log(rel))) + 
     geom_tile() + 
     scale_fill_gradient2(low = "white", high ="black")
 ```
 
 ```{r kegg_histogram, message=F, warning=F}
-gene_counts_relative %>% 
+gene_counts %>% 
   left_join(sample_metadata, by="sample") %>% 
   left_join(gene_annotations, by="gene") %>% 
-  select(Bacteria,ko_id,count) %>% 
+  select(Bacteria,ko_id,rel) %>% 
   filter(Bacteria!="Ruminococcus gnavus") %>% 
   filter(Bacteria!="Mix cultures") %>% 
   group_by(Bacteria,ko_id) %>% 
-  summarise(count=sum(count)) %>% 
+  summarise(rel=sum(rel)) %>% 
   left_join(kegg_functions, by=join_by("ko_id"=="kegg")) %>% 
   filter(!is.na(ko_id)) %>% 
-  filter(count>0.001) %>% 
-  ggplot(aes(y=count,x=fct_reorder(ko_id,-log(count)), fill=kegg_function)) + 
+  filter(rel>0.001) %>% 
+  ggplot(aes(y=rel,x=fct_reorder(ko_id,-log(rel)), fill=kegg_function)) + 
     geom_col(width=2) +
     facet_wrap(Bacteria ~ ., scale="free")+
     theme(axis.text.x=element_blank(),
@@ -160,10 +187,10 @@ function_counts <- gene_counts %>%
   left_join(kegg_functions, by=join_by("ko_id"=="kegg")) %>% 
   filter(!is.na(kegg_function)) %>% 
   group_by(Bacteria,kegg_function) %>% 
-  summarise(count=sum(count))
+  summarise(norm=sum(norm))
 
 function_counts %>% 
-  ggplot(aes(x=count,y=Bacteria, fill=kegg_function, group=kegg_function)) + 
+  ggplot(aes(x=norm,y=Bacteria, fill=kegg_function, group=kegg_function)) + 
     geom_bar(stat="identity", colour="white", linewidth=0.1)
 
 ```
@@ -178,47 +205,9 @@ gene_counts %>%
   left_join(sample_metadata, by="sample") %>% 
   filter(Bacteria=="Mix cultures") %>% 
   group_by(genome) %>% 
-  summarise(count=sum(count)) %>% 
-  filter(count>10000) %>% 
-  ggplot(aes(y=fct_reorder(genome, count),x=count)) +
+  summarise(norm=sum(norm)) %>% 
+  filter(norm>1000) %>% 
+  ggplot(aes(y=fct_reorder(genome, norm),x=norm)) +
     geom_col()
 
 ```
-
-```{r expression_circos, message=F, warning=F, echo=FALSE, eval=FALSE}
-segments <- gene_annotations %>% 
-  filter(genome=="BGU:bin_bacteroides_uniformis") %>% 
-  group_by(contig) %>% 
-  summarise(fragment=max(end_position)) %>% 
-  ungroup() %>% 
-  mutate(chromStart = lag(cumsum(fragment), default = 0) + 1, chromEnd = cumsum(fragment)) %>% 
-  dplyr::rename(chrom=1) %>% 
-  select(chrom,chromStart,chromEnd)
-
-segments_angle <- segAnglePo(seg.dat=segments,seg=segments$chrom)
-
-mapping <- gene_counts_relative %>% 
-  left_join(sample_metadata, by="sample") %>% 
-  left_join(gene_annotations, by="gene") %>% 
-  filter(sample=="C300204") %>% 
-  select(contig,start_position,count,ko_id,gene) %>% 
-  filter(contig %in% segments$chrom) %>% 
-  mutate(count=-log(count)) %>% 
-  dplyr::rename(chrom=1,po=2)
-
-plot(c(1,800), c(1,800), type="n", axes=FALSE, xlab="", ylab="", main="")
-circos(R=260, cir=segments_angle, W=20, mapping=mapping, col.v=3, type="ss", B=TRUE, col=colors[1], lwd=0.1, scale=TRUE)
-
-circos(R=260, cir=segments_angle, W=40, mapping=mapping, col.v=3, type="hist", B=TRUE, scale=TRUE)
-
-
-  
-  group_by(Bacteria,contig) %>% 
-  summarise(fragment=max(end_position)) %>% 
-  ungroup() %>% 
-  mutate(chromStart = lag(cumsum(fragment), default = 0) + 1, chromEnd = cumsum(fragment)) %>% 
-  dplyr::rename(chrom=1) %>% 
-  select(chrom,chromStart,chromEnd)
-
-```
-

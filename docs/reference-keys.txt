@@ -5,8 +5,11 @@ libraries
 overview
 load-data
 basic-statistics
+sequencing-depth-per-sample
 carbohydrate-active-enzymes
 cazy-vs.-non-cazy-gene-expression
+raw-reads
+gene-size-normalised
 cazy-families
 kegg
 bacteria-mix
@@ -38,3 +41,10 @@ carbohydrate-esterase-4-ce4
 carbohydrate-binding-module-family-48
 glycosyltransferase-family-5
 glycosyltransferase-family-2
+glycoside-hydrolase-family-3-gh3
+glycoside-hydrolase-family-77
+target-preparation
+expression-based-1
+differential-expression
+biologically-relevant
+run-shell

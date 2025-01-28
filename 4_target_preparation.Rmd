@@ -1,0 +1,89 @@
+# Target preparation
+
+Target preparation for probe design
+
+```{r target_function, message=F, warning=F}
+generate_target <- function(target, gene_annotations, gene_counts, sample_metadata) {
+  gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(cazy_ids, target) | str_detect(ko_id, target)) %>%
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(contig = str_replace(contig, "BGU:", "BGU_")) %>% 
+  select(contig,start_position,end_position) %>%
+  mutate(score=".",
+         strand="+",
+         frame=".",
+         attribute=".") %>% 
+  unique() %>% 
+  write_tsv(str_c("targets/",target,".gtf"), col_names=FALSE)
+}
+```
+
+## Expression-based
+
+```{r target_expression, message=F, warning=F}
+#Around 1%
+generate_target("K00626", gene_annotations, gene_counts, sample_metadata)
+generate_target("K01007", gene_annotations, gene_counts, sample_metadata)
+generate_target("K00074", gene_annotations, gene_counts, sample_metadata)
+
+#Around 0.1%
+generate_target("K03798", gene_annotations, gene_counts, sample_metadata)
+generate_target("K04759", gene_annotations, gene_counts, sample_metadata)
+generate_target("K01951", gene_annotations, gene_counts, sample_metadata)
+
+#Around 0.01%
+generate_target("K07133", gene_annotations, gene_counts, sample_metadata)
+generate_target("K01811", gene_annotations, gene_counts, sample_metadata)
+generate_target("K01953", gene_annotations, gene_counts, sample_metadata)
+
+#Around 0.001%
+generate_target("K04095", gene_annotations, gene_counts, sample_metadata)
+generate_target("K04784", gene_annotations, gene_counts, sample_metadata)
+generate_target("K00394", gene_annotations, gene_counts, sample_metadata)
+
+#Around 0.0001%
+generate_target("K06390", gene_annotations, gene_counts, sample_metadata)
+generate_target("K07813", gene_annotations, gene_counts, sample_metadata)
+generate_target("K06396", gene_annotations, gene_counts, sample_metadata)
+```
+
+## Differential expression
+
+```{r target_differential, message=F, warning=F}
+# flagellum
+generate_target("K02406|K06603|K02422|K02398|K02407", gene_annotations, gene_counts, sample_metadata)
+#chemotaxis
+generate_target("K03406", gene_annotations, gene_counts, sample_metadata)
+#gluconate
+generate_target("K00033|K25031|K07979|K06155", gene_annotations, gene_counts, sample_metadata)
+#starch
+generate_target("K21572|K21573", gene_annotations, gene_counts, sample_metadata)
+```
+
+## Biologically relevant
+
+```{r target_biology, message=F, warning=F}
+generate_target("GH3", gene_annotations, gene_counts, sample_metadata)
+generate_target("GH77", gene_annotations, gene_counts, sample_metadata)
+generate_target("CE4", gene_annotations, gene_counts, sample_metadata)
+generate_target("CBM48", gene_annotations, gene_counts, sample_metadata)
+generate_target("GT5", gene_annotations, gene_counts, sample_metadata)
+```
+
+## Run shell
+
+```{sh, eval=FALSE}
+screen -S bgu_probe_design_test
+cd bgu_probe_design_test
+source activate isms_probe_design_env
+module load snakemake/7.19.1
+snakemake \
+  -j 20 \
+  --cluster 'sbatch -o results/log/{params.jobname}-slurm-%j.out --mem {resources.mem_gb}G --time {resources.time} -c {threads} --job-name={params.jobname} -v' \
+  --use-conda --conda-frontend mamba --conda-prefix conda \
+  --latency-wait 600
+```

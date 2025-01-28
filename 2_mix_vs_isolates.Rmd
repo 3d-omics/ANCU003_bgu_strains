@@ -12,11 +12,11 @@ gene_counts_pair <- gene_counts %>%
   )) %>% 
   filter(str_detect(gene, "butyrivibrio_fibrisolvens")) %>%
   group_by(sample) %>% 
-  mutate(total=sum(count)) %>% 
+  mutate(total=sum(norm)) %>% 
   rowwise() %>% 
-  mutate(count=count/total) %>% 
-  select(gene,sample,count) %>% 
-  pivot_wider(names_from = sample, values_from = count) %>%
+  mutate(norm=norm/total) %>% 
+  select(gene,sample,norm) %>% 
+  pivot_wider(names_from = sample, values_from = norm) %>%
   filter(if_all(everything(), ~ . != 0)) %>%
   left_join(gene_annotations,by="gene")
 
@@ -51,11 +51,11 @@ gene_counts_pair <- gene_counts %>%
   )) %>% 
   filter(str_detect(gene, "megasphaera_elsdenii")) %>%
   group_by(sample) %>% 
-  mutate(total=sum(count)) %>% 
+  mutate(total=sum(norm)) %>% 
   rowwise() %>% 
-  mutate(count=count/total) %>% 
-  select(gene,sample,count) %>% 
-  pivot_wider(names_from = sample, values_from = count) %>%
+  mutate(norm=norm/total) %>% 
+  select(gene,sample,norm) %>% 
+  pivot_wider(names_from = sample, values_from = norm) %>%
   filter(if_all(everything(), ~ . != 0)) %>%
   left_join(gene_annotations,by="gene")
 
@@ -90,11 +90,11 @@ gene_counts_pair <- gene_counts %>%
   )) %>% 
   filter(str_detect(gene, "prevotella_ruminicola")) %>%
   group_by(sample) %>% 
-  mutate(total=sum(count)) %>% 
+  mutate(total=sum(norm)) %>% 
   rowwise() %>% 
-  mutate(count=count/total) %>% 
-  select(gene,sample,count) %>% 
-  pivot_wider(names_from = sample, values_from = count) %>%
+  mutate(norm=norm/total) %>% 
+  select(gene,sample,norm) %>% 
+  pivot_wider(names_from = sample, values_from = norm) %>%
   filter(if_all(everything(), ~ . != 0)) %>%
   left_join(gene_annotations,by="gene")
 
@@ -129,11 +129,11 @@ gene_counts_pair <- gene_counts %>%
   )) %>% 
   filter(str_detect(gene, "anaerobutyricum_hallii")) %>%
   group_by(sample) %>% 
-  mutate(total=sum(count)) %>% 
+  mutate(total=sum(norm)) %>% 
   rowwise() %>% 
-  mutate(count=count/total) %>% 
-  select(gene,sample,count) %>% 
-  pivot_wider(names_from = sample, values_from = count) %>%
+  mutate(norm=norm/total) %>% 
+  select(gene,sample,norm) %>% 
+  pivot_wider(names_from = sample, values_from = norm) %>%
   filter(if_all(everything(), ~ . != 0)) %>%
   left_join(gene_annotations,by="gene")
 

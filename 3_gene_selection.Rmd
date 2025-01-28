@@ -3,34 +3,48 @@
 ## Expression-based
 
 ```{r gene_selection_expression, message=F, warning=F}
-ko_counts <- gene_counts_relative %>% 
+ko_counts <- gene_counts %>% 
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   left_join(gene_annotations,by="gene") %>%
   group_by(ko_id) %>% 
-  summarise(count=mean(count)) %>% 
+  summarise(count=mean(rel),
+            genes=length(rel),
+            prevalence=n_distinct(sample)-1) %>% 
   arrange(-count)
 ```
 
 ### Around 1%
 
-```{r gene_selection_expression_1, message=F, warning=F}
+```{r gene_selection_expression_1_long, message=F, warning=F}
 ko_counts  %>% 
-  filter(count<0.01,
-         count>0.005) %>% 
+  filter(count>0.005) %>% 
   left_join(gene_annotations,by="ko_id") %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(ko_id) %>% 
-  summarise(count=mean(count),length=sum(gene_length)) %>% 
+  summarise(count=mean(count),length=sum(gene_length),genes=length(count),prevalence=mean(prevalence)) %>% 
   arrange(-length) %>%  
+  slice_head(n = 20) %>%
+  tt()
+```
+
+```{r gene_selection_expression_1_short, message=F, warning=F}
+ko_counts  %>% 
+  filter(count>0.005) %>% 
+  left_join(gene_annotations,by="ko_id") %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(ko_id) %>% 
+  summarise(count=mean(count),length=sum(gene_length),genes=length(count),prevalence=mean(prevalence)) %>% 
+  arrange(length) %>%  
   slice_head(n = 20) %>%
   tt()
 ```
 
 ### Around 0.1%
 
-```{r gene_selection_expression_2, message=F, warning=F}
+```{r gene_selection_expression_2_long, message=F, warning=F}
 ko_counts  %>% 
   filter(count<0.001,
          count>0.0005) %>% 
@@ -38,15 +52,29 @@ ko_counts  %>%
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(ko_id) %>% 
-  summarise(count=mean(count),length=sum(gene_length)) %>% 
+  summarise(count=mean(count),length=sum(gene_length),genes=length(count),prevalence=mean(prevalence)) %>% 
   arrange(-length) %>%
   slice_head(n = 20) %>%
   tt()
 ```
 
+```{r gene_selection_expression_2_short, message=F, warning=F}
+ko_counts  %>% 
+  filter(count<0.001,
+         count>0.0005) %>% 
+  left_join(gene_annotations,by="ko_id") %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(ko_id) %>% 
+  summarise(count=mean(count),length=sum(gene_length),genes=length(count),prevalence=mean(prevalence)) %>% 
+  arrange(length) %>%
+  slice_head(n = 30) %>%
+  tt()
+```
+
 ### Around 0.01%
 
-```{r gene_selection_expression_3, message=F, warning=F}
+```{r gene_selection_expression_3_long, message=F, warning=F}
 ko_counts  %>% 
   filter(count<0.0001,
          count>0.00005) %>% 
@@ -54,15 +82,29 @@ ko_counts  %>%
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(ko_id) %>% 
-  summarise(count=mean(count),length=sum(gene_length)) %>% 
+  summarise(count=mean(count),length=sum(gene_length),genes=length(count),prevalence=mean(prevalence)) %>% 
   arrange(-length) %>%
-  slice_head(n = 20) %>%
+  slice_head(n = 50) %>%
+  tt()
+```
+
+```{r gene_selection_expression_3_short, message=F, warning=F}
+ko_counts  %>% 
+  filter(count<0.0001,
+         count>0.00005) %>% 
+  left_join(gene_annotations,by="ko_id") %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(ko_id) %>% 
+  summarise(count=mean(count),length=sum(gene_length),genes=length(count),prevalence=mean(prevalence)) %>% 
+  arrange(length) %>%
+  slice_head(n = 140) %>%
   tt()
 ```
 
 ### Around 0.001%
 
-```{r gene_selection_expression_4, message=F, warning=F}
+```{r gene_selection_expression_4_long, message=F, warning=F}
 ko_counts  %>% 
   filter(count<0.00001,
          count>0.000005) %>% 
@@ -70,15 +112,29 @@ ko_counts  %>%
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(ko_id) %>% 
-  summarise(count=mean(count),length=sum(gene_length)) %>% 
+  summarise(count=mean(count),length=sum(gene_length),genes=length(count),prevalence=mean(prevalence)) %>% 
   arrange(-length) %>%
   slice_head(n = 20) %>%
   tt()
 ```
 
+```{r gene_selection_expression_4_short, message=F, warning=F}
+ko_counts  %>% 
+  filter(count<0.00001,
+         count>0.000005) %>% 
+  left_join(gene_annotations,by="ko_id") %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(ko_id) %>% 
+  summarise(count=mean(count),length=sum(gene_length),genes=length(count),prevalence=mean(prevalence)) %>% 
+  arrange(length) %>%
+  slice_head(n = 40) %>%
+  tt()
+```
+
 ### Around 0.0001%
 
-```{r gene_selection_expression_5, message=F, warning=F}
+```{r gene_selection_expression_5_long, message=F, warning=F}
 ko_counts  %>% 
   filter(count<0.000001,
          count>0.0000005) %>% 
@@ -86,8 +142,22 @@ ko_counts  %>%
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(ko_id) %>% 
-  summarise(count=mean(count),length=sum(gene_length)) %>% 
+  summarise(count=mean(count),length=sum(gene_length),genes=length(count),prevalence=mean(prevalence)) %>% 
   arrange(-length) %>%
+  slice_head(n = 20) %>%
+  tt()
+```
+
+```{r gene_selection_expression_5_short, message=F, warning=F}
+ko_counts  %>% 
+  filter(count<0.000001,
+         count>0.0000005) %>% 
+  left_join(gene_annotations,by="ko_id") %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(ko_id) %>% 
+  summarise(count=mean(count),length=sum(gene_length),genes=length(ko_id)) %>% 
+  arrange(length) %>%
   slice_head(n = 20) %>%
   tt()
 ```
@@ -101,13 +171,58 @@ ko_counts  %>%
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(ko_id, "K02406|K06603|K02422|K02398|K02407")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_flagellum_K02406, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K02406")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_flagellum_K06603, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K06603")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_flagellum_K02398, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K02398")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
@@ -120,13 +235,13 @@ gene_annotations %>%
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(ko_id, "K03406")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
@@ -141,13 +256,13 @@ gene_annotations %>%
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(cazy_ids, "GH3")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
@@ -160,13 +275,13 @@ gene_annotations %>%
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(cazy_ids, "GH77")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
@@ -180,13 +295,75 @@ gene_annotations %>%
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(ko_id, "K00033|K25031|K07979|K06155")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gluconate_K00033, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K00033")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gluconate_K25031, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K25031")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+
+```{r gene_selection_gluconate_K07979, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K07979")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+
+```{r gene_selection_gluconate_K06155, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K06155")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
@@ -199,13 +376,13 @@ gene_annotations %>%
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(ko_id, "K02003")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
@@ -217,13 +394,13 @@ gene_annotations %>%
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(ko_id, "K12950")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
@@ -235,31 +412,30 @@ gene_annotations %>%
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(ko_id, "K21572|K21573")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
 
 ### Sortase (K08600)
 - Overexpressed by Eubacterium hallii in isolation compared to mixture 
-
 ```{r gene_selection_sortase, message=F, warning=F}
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(ko_id, "K08600")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
@@ -271,13 +447,13 @@ gene_annotations %>%
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(ko_id, "K03671")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
@@ -290,13 +466,28 @@ gene_annotations %>%
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(cazy_ids, "CE4")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_ce4_K22278, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K22278")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
@@ -307,13 +498,13 @@ gene_annotations %>%
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(cazy_ids, "CBM48")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
@@ -324,30 +515,336 @@ gene_annotations %>%
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(cazy_ids, "GT5")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gt5_K05366, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K05366")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gt5_K00703, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K00703")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gt5_K18770, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K18770")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gt5_K03814, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K03814")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```
 
 ### GlycosylTransferase Family 2
 
-```{r gene_selection_gt2, message=F, warning=F}
+```{r gene_selection_gt2b, message=F, warning=F}
 gene_annotations %>% 
   filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
   filter(str_detect(cazy_ids, "GT2")) %>% 
-  left_join(gene_counts_relative,by="gene") %>%
+  left_join(gene_counts,by="gene") %>%
   left_join(sample_metadata,by="sample") %>%
   filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
-  filter(count>0) %>% 
+  filter(rel>0) %>% 
   mutate(gene_length=end_position-start_position) %>% 
   group_by(sample,Bacteria) %>% 
-  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(count)) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gt2_K16698, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K16698")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gt2_K02563, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K02563")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gt2_K05946, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K05946")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gt2_K03429, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K03429")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gt2_K00721, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K00721")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gt2_K12999, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K12999")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+### Glycoside Hydrolase Family 3 (GH3)
+
+```{r gene_selection_gh3b, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(cazy_ids, "GH3")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gh3_K01207, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K01207")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gh3_K01187, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K01187")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gh3_K05349, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K05349")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gh3_K12308, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K01811")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gh3_K01193, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K01193")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gh3_K01191, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K01191")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+### Glycoside Hydrolase Family 77
+
+- Overexpressed by Prevotella ruminicola in isolation compared to mixture
+
+```{r gene_selection_gh77b, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(cazy_ids, "GH77")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gh77_K00705, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K00705")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
+  arrange(-genes) %>% 
+  tt()
+```
+
+```{r gene_selection_gh77_K01208, message=F, warning=F}
+gene_annotations %>% 
+  filter(str_detect(genome, "butyrivibrio_fibrisolvens|megasphaera_elsdenii|prevotella_ruminicola|anaerobutyricum_hallii")) %>% 
+  filter(str_detect(ko_id, "K01208")) %>% 
+  left_join(gene_counts,by="gene") %>%
+  left_join(sample_metadata,by="sample") %>%
+  filter(sample %in% c("C300216","C300205","C300212","C300214","C300203")) %>%
+  filter(rel>0) %>% 
+  mutate(gene_length=end_position-start_position) %>% 
+  group_by(sample,Bacteria) %>% 
+  summarise(genes=n(),length_total=sum(gene_length),length_mean=mean(gene_length),count_relative=sum(rel)) %>% 
   arrange(-genes) %>% 
   tt()
 ```

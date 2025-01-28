@@ -23,7 +23,7 @@
 <meta name="author" content="Antton Alberdi" />
 
 
-<meta name="date" content="2025-01-14" />
+<meta name="date" content="2025-01-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -2037,7 +2037,10 @@ color: #741A48;
 <li class="chapter" data-level="2" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>2</b> Overview</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="overview.html"><a href="overview.html#load-data"><i class="fa fa-check"></i><b>2.1</b> Load data</a></li>
-<li class="chapter" data-level="2.2" data-path="overview.html"><a href="overview.html#basic-statistics"><i class="fa fa-check"></i><b>2.2</b> Basic statistics</a></li>
+<li class="chapter" data-level="2.2" data-path="overview.html"><a href="overview.html#basic-statistics"><i class="fa fa-check"></i><b>2.2</b> Basic statistics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="overview.html"><a href="overview.html#sequencing-depth-per-sample"><i class="fa fa-check"></i><b>2.2.1</b> Sequencing depth per sample</a></li>
+</ul></li>
 <li class="chapter" data-level="2.3" data-path="overview.html"><a href="overview.html#carbohydrate-active-enzymes"><i class="fa fa-check"></i><b>2.3</b> Carbohydrate active enzymes</a>
 <ul>
 <li class="chapter" data-level="2.3.1" data-path="overview.html"><a href="overview.html#cazy-vs.-non-cazy-gene-expression"><i class="fa fa-check"></i><b>2.3.1</b> CAZY vs. non-CAZY gene expression</a></li>
@@ -2082,7 +2085,16 @@ color: #741A48;
 <li class="chapter" data-level="4.3.2" data-path="gene-selection.html"><a href="gene-selection.html#carbohydrate-binding-module-family-48"><i class="fa fa-check"></i><b>4.3.2</b> Carbohydrate-Binding Module Family 48</a></li>
 <li class="chapter" data-level="4.3.3" data-path="gene-selection.html"><a href="gene-selection.html#glycosyltransferase-family-5"><i class="fa fa-check"></i><b>4.3.3</b> GlycosylTransferase Family 5</a></li>
 <li class="chapter" data-level="4.3.4" data-path="gene-selection.html"><a href="gene-selection.html#glycosyltransferase-family-2"><i class="fa fa-check"></i><b>4.3.4</b> GlycosylTransferase Family 2</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gene-selection.html"><a href="gene-selection.html#glycoside-hydrolase-family-3-gh3"><i class="fa fa-check"></i><b>4.3.5</b> Glycoside Hydrolase Family 3 (GH3)</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gene-selection.html"><a href="gene-selection.html#glycoside-hydrolase-family-77"><i class="fa fa-check"></i><b>4.3.6</b> Glycoside Hydrolase Family 77</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="target-preparation.html"><a href="target-preparation.html"><i class="fa fa-check"></i><b>5</b> Target preparation</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="target-preparation.html"><a href="target-preparation.html#expression-based-1"><i class="fa fa-check"></i><b>5.1</b> Expression-based</a></li>
+<li class="chapter" data-level="5.2" data-path="target-preparation.html"><a href="target-preparation.html#differential-expression"><i class="fa fa-check"></i><b>5.2</b> Differential expression</a></li>
+<li class="chapter" data-level="5.3" data-path="target-preparation.html"><a href="target-preparation.html#biologically-relevant"><i class="fa fa-check"></i><b>5.3</b> Biologically relevant</a></li>
+<li class="chapter" data-level="5.4" data-path="target-preparation.html"><a href="target-preparation.html#run-shell"><i class="fa fa-check"></i><b>5.4</b> Run shell</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://www.3domics.eu" target="blank"><b>www.3domics.eu</b></a></li>
@@ -2110,7 +2122,7 @@ color: #741A48;
 <h1 class="title">3D’omics | BGU strain gene expression analysis</h1>
 <h2 class="subtitle"><em>Ongoing study</em></h2>
 <p class="author"><em>Antton Alberdi<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></em></p>
-<p class="date"><em>2025-01-14</em></p>
+<p class="date"><em>2025-01-28</em></p>
 </div>
 <div id="introduction" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction<a href="index.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
@@ -2138,35 +2150,36 @@ color: #741A48;
 <span id="cb2-6"><a href="index.html#cb2-6" tabindex="-1"></a><span class="fu">library</span>(tinytable)</span>
 <span id="cb2-7"><a href="index.html#cb2-7" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
 <span id="cb2-8"><a href="index.html#cb2-8" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
-<span id="cb2-9"><a href="index.html#cb2-9" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="index.html#cb2-10" tabindex="-1"></a><span class="co"># For tree handling</span></span>
-<span id="cb2-11"><a href="index.html#cb2-11" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
-<span id="cb2-12"><a href="index.html#cb2-12" tabindex="-1"></a><span class="fu">library</span>(phyloseq)</span>
-<span id="cb2-13"><a href="index.html#cb2-13" tabindex="-1"></a><span class="fu">library</span>(phytools)</span>
-<span id="cb2-14"><a href="index.html#cb2-14" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="index.html#cb2-15" tabindex="-1"></a><span class="co"># For plotting</span></span>
-<span id="cb2-16"><a href="index.html#cb2-16" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-17"><a href="index.html#cb2-17" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
-<span id="cb2-18"><a href="index.html#cb2-18" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb2-19"><a href="index.html#cb2-19" tabindex="-1"></a><span class="fu">library</span>(ggnewscale)</span>
-<span id="cb2-20"><a href="index.html#cb2-20" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb2-21"><a href="index.html#cb2-21" tabindex="-1"></a><span class="fu">library</span>(ggtreeExtra)</span>
-<span id="cb2-22"><a href="index.html#cb2-22" tabindex="-1"></a><span class="fu">library</span>(ggtree)</span>
-<span id="cb2-23"><a href="index.html#cb2-23" tabindex="-1"></a><span class="fu">library</span>(ggh4x)</span>
-<span id="cb2-24"><a href="index.html#cb2-24" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
-<span id="cb2-25"><a href="index.html#cb2-25" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="index.html#cb2-26" tabindex="-1"></a><span class="co"># For statistics</span></span>
-<span id="cb2-27"><a href="index.html#cb2-27" tabindex="-1"></a><span class="fu">library</span>(microbiome)</span>
-<span id="cb2-28"><a href="index.html#cb2-28" tabindex="-1"></a><span class="fu">library</span>(spaa)</span>
-<span id="cb2-29"><a href="index.html#cb2-29" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
-<span id="cb2-30"><a href="index.html#cb2-30" tabindex="-1"></a><span class="fu">library</span>(Rtsne)</span>
-<span id="cb2-31"><a href="index.html#cb2-31" tabindex="-1"></a><span class="fu">library</span>(geiger)</span>
-<span id="cb2-32"><a href="index.html#cb2-32" tabindex="-1"></a><span class="fu">library</span>(hilldiv2)</span>
-<span id="cb2-33"><a href="index.html#cb2-33" tabindex="-1"></a><span class="fu">library</span>(distillR)</span>
-<span id="cb2-34"><a href="index.html#cb2-34" tabindex="-1"></a><span class="fu">library</span>(ANCOMBC)</span>
-<span id="cb2-35"><a href="index.html#cb2-35" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb2-36"><a href="index.html#cb2-36" tabindex="-1"></a><span class="fu">library</span>(Hmsc)</span>
-<span id="cb2-37"><a href="index.html#cb2-37" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code></pre></div>
+<span id="cb2-9"><a href="index.html#cb2-9" tabindex="-1"></a><span class="fu">library</span>(rairtable)</span>
+<span id="cb2-10"><a href="index.html#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="index.html#cb2-11" tabindex="-1"></a><span class="co"># For tree handling</span></span>
+<span id="cb2-12"><a href="index.html#cb2-12" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb2-13"><a href="index.html#cb2-13" tabindex="-1"></a><span class="fu">library</span>(phyloseq)</span>
+<span id="cb2-14"><a href="index.html#cb2-14" tabindex="-1"></a><span class="fu">library</span>(phytools)</span>
+<span id="cb2-15"><a href="index.html#cb2-15" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="index.html#cb2-16" tabindex="-1"></a><span class="co"># For plotting</span></span>
+<span id="cb2-17"><a href="index.html#cb2-17" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-18"><a href="index.html#cb2-18" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb2-19"><a href="index.html#cb2-19" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb2-20"><a href="index.html#cb2-20" tabindex="-1"></a><span class="fu">library</span>(ggnewscale)</span>
+<span id="cb2-21"><a href="index.html#cb2-21" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb2-22"><a href="index.html#cb2-22" tabindex="-1"></a><span class="fu">library</span>(ggtreeExtra)</span>
+<span id="cb2-23"><a href="index.html#cb2-23" tabindex="-1"></a><span class="fu">library</span>(ggtree)</span>
+<span id="cb2-24"><a href="index.html#cb2-24" tabindex="-1"></a><span class="fu">library</span>(ggh4x)</span>
+<span id="cb2-25"><a href="index.html#cb2-25" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb2-26"><a href="index.html#cb2-26" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="index.html#cb2-27" tabindex="-1"></a><span class="co"># For statistics</span></span>
+<span id="cb2-28"><a href="index.html#cb2-28" tabindex="-1"></a><span class="fu">library</span>(microbiome)</span>
+<span id="cb2-29"><a href="index.html#cb2-29" tabindex="-1"></a><span class="fu">library</span>(spaa)</span>
+<span id="cb2-30"><a href="index.html#cb2-30" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb2-31"><a href="index.html#cb2-31" tabindex="-1"></a><span class="fu">library</span>(Rtsne)</span>
+<span id="cb2-32"><a href="index.html#cb2-32" tabindex="-1"></a><span class="fu">library</span>(geiger)</span>
+<span id="cb2-33"><a href="index.html#cb2-33" tabindex="-1"></a><span class="fu">library</span>(hilldiv2)</span>
+<span id="cb2-34"><a href="index.html#cb2-34" tabindex="-1"></a><span class="fu">library</span>(distillR)</span>
+<span id="cb2-35"><a href="index.html#cb2-35" tabindex="-1"></a><span class="fu">library</span>(ANCOMBC)</span>
+<span id="cb2-36"><a href="index.html#cb2-36" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb2-37"><a href="index.html#cb2-37" tabindex="-1"></a><span class="fu">library</span>(Hmsc)</span>
+<span id="cb2-38"><a href="index.html#cb2-38" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code></pre></div>
 
 </div>
 </div>
